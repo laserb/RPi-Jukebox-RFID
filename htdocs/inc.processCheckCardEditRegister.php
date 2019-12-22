@@ -10,8 +10,8 @@ $messageAction = "";
 $messageSuccess = "";
 
 if($post['delete'] == "delete") {
-    $messageAction .= "<p>The card with the ID '".$post['cardID']." has been deleted. 
-        If you made a mistake, this is your chance to press 'Submit' to restore the card settings. 
+    $messageAction .= "<p>The card with the ID '".$post['cardID']." has been deleted.
+        If you made a mistake, this is your chance to press 'Submit' to restore the card settings.
         Else: Go <a href='index.php' class='mainMenu'><i class='mdi mdi-home'></i> Home</a>.</p>";
     // remove $fileshortcuts to cardID file in shortcuts
     $exec = "rm ".$fileshortcuts;
@@ -48,7 +48,7 @@ if($post['delete'] == "delete") {
     if(isset($post['streamURL']) && isset($post['audiofolder'])) {
         $messageAction .= $lang['cardRegisterErrorStreamAndAudio']." (error 001)";
     }
-    
+
     // posted too little?
     if((!isset($post['streamURL']) || !isset($post['streamType'])) && !isset($post['audiofolder']) && !isset($post['YTstreamURL'])) {
         $messageAction .= $lang['cardRegisterErrorStreamOrAudio']." (error 002)";
@@ -58,26 +58,26 @@ if($post['delete'] == "delete") {
     if(isset($post['streamFolderName']) && isset($post['audiofolder'])) {
         $messageAction .= $lang['cardRegisterErrorExistingAndNew']." (error 003)";
     }
-    
+
     // streamFolderName already exists
     if(isset($post['streamFolderName']) && file_exists($Audio_Folders_Path.'/'.$post['streamFolderName'])) {
         $messageAction .= $lang['cardRegisterErrorExistingFolder']." (error 004)";
     }
-    
+
     // No streamFolderName entered
     if(isset($post['streamURL']) && !isset($post['streamFolderName'])) {
         $messageAction .= $lang['cardRegisterErrorSuggestFolder']." (error 005)";
         // suggest folder name: get rid of strange chars, prefixes and the like
         $post['streamFolderName'] = $link = str_replace(array('http://','https://','/','=','-','.', 'www','?','&'), '', $post['streamURL']);
     }
-    
+
     // streamFolderName not given
     if( ( isset($post['streamURL']) || isset($post['YTstreamURL']) ) && !isset($post['audiofolder']) && !isset($post['streamFolderName'])) {
         $messageAction .= $lang['cardRegisterErrorSuggestFolder']." (error 006)";
         // suggest folder name: get rid of strange chars, prefixes and the like
         $post['streamFolderName'] = $link = str_replace(array('http://','https://','/','=','-','.', 'www','?','&'), '', $post['streamURL']);
     }
-    
+
     /*
     * any errors?
     */

@@ -24,7 +24,7 @@ html_bootstrap3_createHeader("en","Phoniebox",$conf['base_url']);
 ?>
 <body>
   <div class="container">
-      
+
 <?php
 include("inc.navigation.php");
 
@@ -47,7 +47,7 @@ include("inc.processCheckCardEditRegister.php");
 */
 if ($messageAction == "") {
     $messageAction = $lang['cardRegisterMessageDefault'].$lang['cardRegisterManualLinks'];
-} 
+}
 if(isset($messageSuccess) && $messageSuccess != "") {
     print '<div class="alert alert-success">'.$messageSuccess.'<p>'.$lang['cardRegisterMessageSwipeNew'].'</p></div>';
     unset($post);
@@ -103,7 +103,7 @@ $(document).ready(function() {
     }, 1000);
 });
 
-</script>  
+</script>
 
 </body>
 </html>

@@ -2,14 +2,14 @@
 
 ?>
         <form name='volume' method='post' action='<?php print $_SERVER['PHP_SELF']; ?>'>
-        
-        <fieldset> 
+
+        <fieldset>
         <legend><?php print $lang['globalCardId']; ?></legend>
         <!-- Text input-->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="streamURL"><?php print $fdata['streamURL_label']; ?></label>  
+          <label class="col-md-4 control-label" for="streamURL"><?php print $fdata['streamURL_label']; ?></label>
           <div class="col-md-6">
-          
+
 <?php
 if($fdata['streamURL_ajax'] == "true") {
     print "<span id=\"refresh_id\"></span>";
@@ -31,16 +31,16 @@ foreach ($shortcutstemp as $shortcuttemp) {
 }
 //print "<pre>"; print_r($shortcuts); print "</pre>"; //???
 ?>
-          
-          <span class="help-block"><?php print $fdata['streamURL_help']; ?></span>  
+
+          <span class="help-block"><?php print $fdata['streamURL_help']; ?></span>
           </div>
         </div>
         </fieldset>
-        
-        <fieldset>        
+
+        <fieldset>
         <!-- Form Name -->
         <legend><?php print $lang['cardFormFolderLegend']; ?></legend>
-        
+
         <!-- Select Basic -->
         <div class="form-group">
           <label class="col-md-4 control-label" for="audiofolder"><?php print $lang['cardFormFolderLabel']; ?></label>
@@ -68,7 +68,7 @@ foreach($audiofolders_abs as $audiofolder){
 }
 //print "<pre>"; print_r($audiofolders); print "</pre>"; //???
 
-    
+
 /*
 // counter for ID of each folder
 $idcounter = 0;
@@ -77,7 +77,7 @@ foreach($audiofolders as $keyfolder => $audiofolder) {
     if($post['folder'] != $keyfolder) {
         print "              <option value='".$keyfolder."'";
         print ">".$audiofolder."</option>\n";
-    }   
+    }
 }
 */
 
@@ -105,30 +105,30 @@ foreach($audiofolders as $keyfolder => $audiofolder) {
           </div>
         </div>
         </fieldset>
-        
-        <fieldset>        
+
+        <fieldset>
         <!-- Form Name -->
         <legend><?php print $lang['globalStream']; ?></legend>
-        
+
         <!-- Text input-->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="streamURL"><?php print $lang['cardFormStreamLabel']; ?></label>  
+          <label class="col-md-4 control-label" for="streamURL"><?php print $lang['cardFormStreamLabel']; ?></label>
           <div class="col-md-6">
           <input value="<?php
           if (isset($fpost['streamURL'])) {
               print $fpost['streamURL'];
           }
-          ?>" id="streamURL" name="streamURL" placeholder="<?php 
-		  if ($edition == "plusSpotify") { 
-		  print $lang['cardFormStreamPlaceholderPlusSpotify']; 
-		  } elseif ($edition == "classic") { 
-		  print $lang['cardFormStreamPlaceholderClassic']; 
-		  } 
+          ?>" id="streamURL" name="streamURL" placeholder="<?php
+		  if ($edition == "plusSpotify") {
+		  print $lang['cardFormStreamPlaceholderPlusSpotify'];
+		  } elseif ($edition == "classic") {
+		  print $lang['cardFormStreamPlaceholderClassic'];
+		  }
 		  ?>" class="form-control input-md" type="text">
-          <span class="help-block"><?php print $lang['cardFormStreamHelp']; ?></span>  
+          <span class="help-block"><?php print $lang['cardFormStreamHelp']; ?></span>
           </div>
         </div>
-        
+
         <!-- Select Basic -->
         <div class="form-group">
           <label class="col-md-4 control-label" for="streamType"></label>
@@ -147,42 +147,42 @@ foreach($audiofolders as $keyfolder => $audiofolder) {
               <option value='livestream'<?php if($fpost['streamType'] == "livestream") { print " selected=selected"; } ?>>Web radio / live stream</option>
               <option value='other'<?php if($fpost['streamType'] == "other") { print " selected=selected"; } ?>>Other</option>
             </select>
-            <span class="help-block"><?php print $lang['cardFormStreamTypeHelp']; ?></span>  
+            <span class="help-block"><?php print $lang['cardFormStreamTypeHelp']; ?></span>
           </div>
         </div>
-        
+
         <!-- Text input-->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="streamFolderName"></label>  
+          <label class="col-md-4 control-label" for="streamFolderName"></label>
           <div class="col-md-6">
           <input value="<?php
           if (isset($fpost['streamFolderName'])) {
               print $fpost['streamFolderName'];
           }
           ?>" id="streamFolderName" name="streamFolderName" placeholder="<?php print $lang['cardFormStreamFolderPlaceholder']; ?>" class="form-control input-md" type="text">
-          <span class="help-block"><?php print $lang['cardFormStreamFolderHelp']; ?></span>  
+          <span class="help-block"><?php print $lang['cardFormStreamFolderHelp']; ?></span>
           </div>
         </div>
-        
+
         </fieldset>
 
-        <fieldset>        
+        <fieldset>
         <!-- Form Name -->
         <legend><?php print $lang['cardFormYTLegend']; ?></legend>
-        
+
         <!-- Text input-->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="YTstreamURL"><?php print $lang['cardFormYTLabel']; ?></label>  
+          <label class="col-md-4 control-label" for="YTstreamURL"><?php print $lang['cardFormYTLabel']; ?></label>
           <div class="col-md-6">
           <input value="<?php
           if (isset($fpost['YTstreamURL'])) {
               print $fpost['YTstreamURL'];
           }
           ?>" id="YTstreamURL" name="YTstreamURL" placeholder="<?php print $lang['cardFormYTPlaceholder']; ?>" class="form-control input-md" type="text">
-          <span class="help-block"><?php print $lang['cardFormYTHelp']; ?></span>  
+          <span class="help-block"><?php print $lang['cardFormYTHelp']; ?></span>
           </div>
         </div>
-        
+
         <!-- Select Basic -->
         <div class="form-group">
           <label class="col-md-4 control-label" for="YTaudiofolder"></label>
@@ -197,7 +197,7 @@ if(! isset($fpost['audiofolder'])) {
         $fpost['audiofolder'] = $shortcuts[$fpost['cardID']];
     }
 }
-    
+
 // counter for ID of each folder
 $idcounter = 0;
 
@@ -208,29 +208,29 @@ foreach($audiofolders as $keyfolder => $audiofolder) {
         print " selected=selected";
     }
     print ">".$audiofolder."</option>\n";
-   
+
 }
 ?>
             </select>
-            <span class="help-block"></span>  
+            <span class="help-block"></span>
           </div>
         </div>
-        
+
         <!-- Text input-->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="YTstreamFolderName"></label>  
+          <label class="col-md-4 control-label" for="YTstreamFolderName"></label>
           <div class="col-md-6">
           <input value="<?php
           if (isset($fpost['YTstreamFolderName'])) {
               print $fpost['YTstreamFolderName'];
           }
           ?>" id="YTstreamFolderName" name="YTstreamFolderName" placeholder="<?php print $lang['cardFormYTFolderPlaceholder']; ?>" class="form-control input-md" type="text">
-          <span class="help-block"><?php print $lang['cardFormYTFolderHelp']; ?></span>  
+          <span class="help-block"><?php print $lang['cardFormYTFolderHelp']; ?></span>
           </div>
         </div>
-        
+
         </fieldset>
-        
+
         <!-- Button (Double) -->
         <div class="form-group">
           <label class="col-md-4 control-label" for="submit"></label>

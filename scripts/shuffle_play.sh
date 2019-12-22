@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This script saves or restores the SHUFFLE status in a playlist (=folder) and enables/disables shuffle mode according to the folder.conf of the current folder/playlist
-# Usage: 
+# Usage:
 # Enable shuffle for folder: ./shuffle_play-sh -c=enableshuffle -v=foldername_in_audiofolders
 # Disable resume for folder: ./shuffle_play-sh -c=disableshuffle -v=foldername_in_audiofolders
 #
@@ -33,13 +33,13 @@ if [ "${DEBUG_shuffle_play_sh}" == "TRUE" ]; then echo "VAR COMMAND: $COMMAND" >
 if [ "${DEBUG_shuffle_play_sh}" == "TRUE" ]; then echo "VAR VALUE: $VALUE" >> $PATHDATA/../logs/debug.log; fi
 if [ "${DEBUG_shuffle_play_sh}" == "TRUE" ]; then echo "VAR FOLDER: $FOLDER" >> $PATHDATA/../logs/debug.log; fi
 
-# Get folder name of currently played audio by extracting the playlist name 
+# Get folder name of currently played audio by extracting the playlist name
 # ONLY if none was passed on. The "pass on" is needed to save position
 # when starting a new playlist while an old is playing. In this case
 # mpc lsplaylists will get confused because it has more than one.
 # check if $FOLDER is empty / unset
 if [ -z "$FOLDER" ]
-then 
+then
     # this is old: FOLDER=$(mpc lsplaylists)
     # actually, this should be the latest folder:
     FOLDER=$(cat $PATHDATA/../settings/Latest_Folder_Played)
@@ -69,7 +69,7 @@ case "$COMMAND" in
 shuffle_check)
     #Check if SHUFFLE is switched on. As this is called for each playlist change, it will overwrite temporary shuffle mode
 	if [ $SHUFFLE == "ON" ];
-	then 
+	then
 		if [ "${DEBUG_shuffle_play_sh}" == "TRUE" ]; then echo "  entering: shuffle_check with value $SHUFFLE" >> $PATHDATA/../logs/debug.log; fi
 		mpc shuffle
 	else

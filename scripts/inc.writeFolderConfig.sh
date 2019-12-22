@@ -5,8 +5,8 @@
 # folder.conf sits in the audio folder and will grow over time,
 # containing all infos about how to play the content
 # such as loop, resume play, shuffle, elapsed time, etc.
-# 
-# The functionality seems weird (but makes total sense:). 
+#
+# The functionality seems weird (but makes total sense:).
 # This is how it works:
 # 1. Since this file will be called from another bash, we can assume that
 #    we have same variables that need saving: check each and make a copy
@@ -18,7 +18,7 @@
 #    IF new var available, write this one
 #    ELSE write the one we read in step 2.
 #
-# Why so complicated? Because we don't know what other vars will be in the 
+# Why so complicated? Because we don't know what other vars will be in the
 # folder config in the future. Editing only the sample config file and this
 # file, we are future proof, because old config files will work and update
 # gracefully when new stuff arrives in the sample file.
@@ -28,7 +28,7 @@
 # ELAPSED="%ELAPSED%"
 # ...
 #
-# For complete control, the creatin of this raw config sample 
+# For complete control, the creatin of this raw config sample
 # is also kept in this script and write if from here.
 # So that all new vars etc. only require changing this file.
 
@@ -85,13 +85,13 @@ then
         LOOP="OFF"
         SINGLE="OFF"
     fi
-    
+
     #########################################################
     # KEEP NEW VARS IN MIND
     # Go through all given vars - make copy with prefix if found
     if [ "${DEBUG_inc_writeFolderConfig_sh}" == "TRUE" ]; then echo "  KEEP NEW VARS IN MIND" >> $PATHDATA/../logs/debug.log; fi
-    if [ "$CURRENTFILENAME" ]; then 
-        NEWCURRENTFILENAME="$CURRENTFILENAME"; 
+    if [ "$CURRENTFILENAME" ]; then
+        NEWCURRENTFILENAME="$CURRENTFILENAME";
         if [ "${DEBUG_inc_writeFolderConfig_sh}" == "TRUE" ]; then echo "VAR NEWCURRENTFILENAME: $NEWCURRENTFILENAME" >> $PATHDATA/../logs/debug.log; fi
     fi
     if [ "$ELAPSED" ]; then NEWELAPSED="$ELAPSED"; fi
@@ -109,7 +109,7 @@ then
 
     #########################################################
     # RAW CONFIG FILE
-    # Replace current config with empty sample    
+    # Replace current config with empty sample
     # write "empty" config file with vars that will be replaced later
     rm "${AUDIOFOLDERSPATH}/${FOLDER}/folder.conf"
     echo "CURRENTFILENAME=\"%CURRENTFILENAME%\"" >> "${AUDIOFOLDERSPATH}/${FOLDER}/folder.conf"
@@ -121,13 +121,13 @@ then
     echo "SINGLE=\"%SINGLE%\"" >> "${AUDIOFOLDERSPATH}/${FOLDER}/folder.conf"
 
     # Let the juggle begin
-    
+
     #########################################################
     # REPLACE VALUES FROM THE CONFIG FILE WITH NEW ONES
     # Walk through all vars and prefer new over existing to write to config
     if [ "${DEBUG_inc_writeFolderConfig_sh}" == "TRUE" ]; then echo "  REPLACE VALUES FROM THE CONFIG FILE WITH NEW ONES" >> $PATHDATA/../logs/debug.log; fi
-    if [ "$NEWCURRENTFILENAME" ]; then 
-        CURRENTFILENAME="$NEWCURRENTFILENAME"; 
+    if [ "$NEWCURRENTFILENAME" ]; then
+        CURRENTFILENAME="$NEWCURRENTFILENAME";
         if [ "${DEBUG_inc_writeFolderConfig_sh}" == "TRUE" ]; then echo "VAR CURRENTFILENAME: $CURRENTFILENAME" >> $PATHDATA/../logs/debug.log; fi
     fi
     if [ "$NEWELAPSED" ]; then ELAPSED="$NEWELAPSED"; fi
@@ -136,10 +136,10 @@ then
     if [ "$NEWSHUFFLE" ]; then SHUFFLE="$NEWSHUFFLE"; fi
     if [ "$NEWLOOP" ]; then LOOP="$NEWLOOP"; fi
     if [ "$NEWSINGLE" ]; then SINGLE="$NEWSINGLE"; fi
-    
+
     #########################################################
     # WRITE THE VALUES INTO THE NEWLY CREATED RAW CONFIG
-    # for $CURRENTFILENAME using | as alternate regex delimiter because of the folder path slash 
+    # for $CURRENTFILENAME using | as alternate regex delimiter because of the folder path slash
     if [ "${DEBUG_inc_writeFolderConfig_sh}" == "TRUE" ]; then echo "  WRITE THE VALUES INTO THE NEWLY CREATED RAW CONFIG" >> $PATHDATA/../logs/debug.log; fi
     sed -i 's|%CURRENTFILENAME%|'"$CURRENTFILENAME"'|' "${AUDIOFOLDERSPATH}/${FOLDER}/folder.conf"
     sed -i 's/%ELAPSED%/'"$ELAPSED"'/' "${AUDIOFOLDERSPATH}/${FOLDER}/folder.conf"

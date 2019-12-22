@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # This script saves or restores the last position (song and time) in a playlist (=folder)
-# Saving and restoring will only be made if a "lastplayed.dat" file is found in the folder where the 
+# Saving and restoring will only be made if a "lastplayed.dat" file is found in the folder where the
 # audio is stored.
-# Usage: 
+# Usage:
 # Save the position: ./resume_play.sh -c=savepos
 # Restore position and play or play from playlist position: ./resume_play-sh -c=resume -v=playlist_pos
 # Enable resume for folder: ./resume_play-sh -c=enableresume -v=foldername_in_audiofolders
@@ -31,7 +31,7 @@ PATHDATA="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 . $PATHDATA/inc.readArgsFromCommandLine.sh
 
 ###########################################################
-# Read global configuration file (and create is not exists) 
+# Read global configuration file (and create is not exists)
 # create the global configuration file from single files - if it does not exist
 if [ ! -f $PATHDATA/../settings/global.conf ]; then
     . inc.writeGlobalConfig.sh
@@ -66,7 +66,7 @@ if [ "${DEBUG_resume_play_sh}" == "TRUE" ]; then echo "  Now doing what COMMAND 
 case "$COMMAND" in
 
 savepos)
-    # Get folder name of currently played audio 
+    # Get folder name of currently played audio
     FOLDER=$(cat $PATHDATA/../settings/Latest_Folder_Played)
     # Read the current config file (include will execute == read)
     . "$AUDIOFOLDERSPATH/$FOLDER/folder.conf"
@@ -83,10 +83,10 @@ savepos)
         then
             #Get the filename of the currently played audio
             CURRENTFILENAME=$(echo -e "currentsong\nclose" | nc -w 1 localhost 6600 | grep -o -P '(?<=file: ).*')
-            if [ "${DEBUG_resume_play_sh}" == "TRUE" ]; then echo "  savepos CURRENTFILENAME: $CURRENTFILENAME" >> $PATHDATA/../logs/debug.log; fi 
+            if [ "${DEBUG_resume_play_sh}" == "TRUE" ]; then echo "  savepos CURRENTFILENAME: $CURRENTFILENAME" >> $PATHDATA/../logs/debug.log; fi
             # "Stopped" for signaling -c=resume that there was a stopping event
             # (this is done to get a proper resume on the first track if the playlist has ended before)
-            
+
             # set the vars we need to change
             CURRENTFILENAME=$CURRENTFILENAME
             ELAPSED=$ELAPSED
@@ -112,15 +112,15 @@ resume)
         #CURRENTFILENAME
         #ELAPSED
         #PLAYSTATUS
-        
+
         # Check if we got a "savepos" command after the last "resume". Otherwise we assume that the playlist was played until the end.
-        # In this case, start the playlist from beginning 
-        if [ $PLAYSTATUS == "Stopped" ] 
+        # In this case, start the playlist from beginning
+        if [ $PLAYSTATUS == "Stopped" ]
         then
             # Get the playlist position of the file from mpd
-            # Alternative approach: "mpc searchplay xx && mpc seek yy" 
+            # Alternative approach: "mpc searchplay xx && mpc seek yy"
             PLAYLISTPOS=$(echo -e playlistfind filename \"$CURRENTFILENAME\"\\nclose | nc -w 1 localhost 6600 | grep -o -P '(?<=Pos: ).*')
-            
+
             # If the file is found, it is played from ELAPSED, otherwise start playlist from beginning. If we got a playlist position
             # play from that position, not the saved one.
             if [ ! -z $PLAYLISTPOS ] && [ -z $VALUE ] ;
@@ -129,18 +129,18 @@ resume)
             else
                 echo -e "play $VALUE" | nc -w 1 localhost 6600
             fi
-            # If the playlist ends without any stop/shutdown/new swipe (you've listened to all of the tracks), 
-            # there's no savepos event and we would resume at the last position anywhere in the playlist. 
-            # To catch these, we signal it to the next "resume" call via writing it to folder.conf that 
-            # we still assume that the audio is playing. 
+            # If the playlist ends without any stop/shutdown/new swipe (you've listened to all of the tracks),
+            # there's no savepos event and we would resume at the last position anywhere in the playlist.
+            # To catch these, we signal it to the next "resume" call via writing it to folder.conf that
+            # we still assume that the audio is playing.
             # be anything here, as we won't use the information if "Playing" is found by "resume".
-            
+
             # set the vars we need to change
             PLAYSTATUS="Playing"
             # now calling a script which will only replace these new vars in folder.conf
             # (see script for details)
             . $PATHDATA/inc.writeFolderConfig.sh
-            
+
         else
             # We assume that the playlist ran to the end the last time and start from the beginning.
             # Or: playlist is playing and we've got a play from playlist position command.

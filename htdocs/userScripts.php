@@ -15,34 +15,34 @@ include("inc.header.php");
 /*******************************************
 * URLPARAMETERS
 *******************************************/
-if(isset($_GET['folder']) && trim($_GET['folder']) != "") { 
+if(isset($_GET['folder']) && trim($_GET['folder']) != "") {
     $post['folder'] = trim($_GET['folder']);
 } else {
-    if(isset($_POST['folder']) && trim($_POST['folder']) != "") { 
+    if(isset($_POST['folder']) && trim($_POST['folder']) != "") {
         $post['folder'] = trim($_POST['folder']);
     }
 }
-if(isset($_GET['folderNew']) && trim($_GET['folderNew']) != "") { 
+if(isset($_GET['folderNew']) && trim($_GET['folderNew']) != "") {
     $post['folderNew'] = $_GET['folderNew'];
 } else {
-    if(isset($_POST['folderNew']) && trim($_POST['folderNew']) != "") { 
+    if(isset($_POST['folderNew']) && trim($_POST['folderNew']) != "") {
         $post['folderNew'] = $_POST['folderNew'];
     }
 }
 
 /*
-if(isset($_GET['folderNew']) && trim($_GET['folderNew']) != "") { 
+if(isset($_GET['folderNew']) && trim($_GET['folderNew']) != "") {
     $post['folderNew'] = trim($_GET['folderNew']);
 } else {
-    if(isset($_POST['folderNew']) && trim($_POST['folderNew']) != "") { 
+    if(isset($_POST['folderNew']) && trim($_POST['folderNew']) != "") {
         $post['folderNew'] = trim($_POST['folderNew']);
     }
 }
 */
-if(isset($_GET['filename']) && $_GET['filename'] != "") { 
+if(isset($_GET['filename']) && $_GET['filename'] != "") {
     $post['filename'] = $_GET['filename'];
 } else {
-    if(isset($_POST['filename']) && $_POST['filename'] != "") { 
+    if(isset($_POST['filename']) && $_POST['filename'] != "") {
         $post['filename'] = $_POST['filename'];
     }
 }
@@ -73,13 +73,13 @@ $messageAction .= "Executed '".$conf['scripts_abs']."/userscripts/".$post['folde
 
 if($_POST['ACTION'] == "fileUpload") {
     /*
-    * I spent 3 hours trying to find out why when I upload multiples file $_FILES  return empty, 
-    * I did noticed it was only when I select files that exceed 3m so I thought it was something 
-    * related to the MAX_UPLOAD_SIZE that for my surprice came as default as 20m which was very 
-    * confusing. Later I discovery the problem was in the POST_MAX_SIZE been 3m, so it happen 
-    * that not only MAX_UPLOAD_SIZE is responsible and that is why I'd like to know there is no 
+    * I spent 3 hours trying to find out why when I upload multiples file $_FILES  return empty,
+    * I did noticed it was only when I select files that exceed 3m so I thought it was something
+    * related to the MAX_UPLOAD_SIZE that for my surprice came as default as 20m which was very
+    * confusing. Later I discovery the problem was in the POST_MAX_SIZE been 3m, so it happen
+    * that not only MAX_UPLOAD_SIZE is responsible and that is why I'd like to know there is no
     * error message that shows the cause.
-    
+
     $uFiles = getFiles();
     // are there any files?
     foreach($uFiles['ufile'] as $key => $values) {
@@ -106,7 +106,7 @@ if($_POST['ACTION'] == "fileUpload") {
         && $post['folderNew'] != ""
         && ! file_exists($Audio_Folders_Path."/".$post['folderNew'])
         ){
-            // yes, valid new folder 
+            // yes, valid new folder
             $messageAction .= "Will create new folder and move files to: '".$post['folderNew']."'";
             // create folder
             $exec = "mkdir ".$Audio_Folders_Path."/".$post['folderNew']."; chmod 777 ".$Audio_Folders_Path."/".$post['folderNew'];
@@ -119,7 +119,7 @@ if($_POST['ACTION'] == "fileUpload") {
     if($messageWarning == "") {
         // else: move files to folder
         foreach($uFiles['ufile'] as $key => $values) {
-//            $replafile = str_replace(" ", "_", $values['name']); 
+//            $replafile = str_replace(" ", "_", $values['name']);
 //            $exec = "mv ".$values['tmp_name']." ".$moveFolder."/".$replafile."; chmod 777 ".$moveFolder."/".$replafile;
               $exec = "mv ".$values['tmp_name']." ".$moveFolder."/".$values['name']."; chmod 777 ".$moveFolder."/".$values['name'];
 
@@ -128,8 +128,8 @@ if($_POST['ACTION'] == "fileUpload") {
         }
         $messageSuccess = "<p>Files were successfully uploaded.</p>";
     }
-    
-    
+
+
 }
 */
 /*******************************************
@@ -141,7 +141,7 @@ html_bootstrap3_createHeader("en","Phoniebox",$conf['base_url']);
 ?>
 <body>
   <div class="container">
-      
+
 <?php
 include("inc.navigation.php");
 ?>
@@ -157,7 +157,7 @@ include("inc.navigation.php");
 */
 if ($messageAction == "") {
     $messageAction = "These scripts in /scripts/userscripts/ are executed without feedback and should log their own errors";
-} 
+}
 if(isset($messageWarning) && $messageWarning != "") {
     print '<div class="alert alert-warning">'.$messageWarning.'</div>';
 }
@@ -174,23 +174,23 @@ if(isset($messageSuccess) && $messageSuccess != "") {
 
        </div>
     </div>
-    
+
      <!-- Form 1 -->
-    
+
      <div class="row">
       <div class="col-lg-12">
-      
+
         <form name='userScript'  enctype="multipart/form-data" method="post" action='<?php print $_SERVER['PHP_SELF']; ?>'>
           <input type="hidden" name="folder" value="<?php print $post['folder']; ?>">
           <input type="hidden" name="filename" value="<?php print $post['filename']; ?>">
           <input type="hidden" name="ACTION" value="userScript">
-        <fieldset> 
+        <fieldset>
         <legend><i class='mdi mdi-file-document-box'></i>Start custom scripts</legend>
 
         <!-- Select Basic -->
         <div class="form-group">
-        
- 
+
+
           <label class="col-md-3 control-label" for="folder">Custom script</label>
            <div class="col-md-7">
             <select id="folder" name="folder" class="form-control">
@@ -208,7 +208,7 @@ usort($audiofolders, 'strcasecmp');
         $fpost['folder'] = $shortcuts[$fpost['cardID']];
     }
 }
-*/  
+*/
 // counter for ID of each folder
 $idcounter = 0;
 
@@ -220,32 +220,32 @@ foreach($audiofolders as $audiofolder) {
         print " selected=selected";
     }
     print ">".basename($audiofolder)."</option>\n";
-   
+
 }
 ?>
             </select>
           </div>
         </div>
-      
-      
-        
+
+
+
         <!-- Text input-->
         <div class="form-group">
-          <label class="col-md-3 control-label" for="folderNew"></label>  
-          
+          <label class="col-md-3 control-label" for="folderNew"></label>
+
           <div class="col-md-7">
           <input value="<?php
           if (isset($post['folderNew'])) {
               print $post['folderNew'];
           }
           ?>" id="folderNew" name="folderNew" placeholder="add cmdline parameters here (e.g. <newssid ssid passwort> for addhotspot.sh" class="form-control input-md" type="text">
-          <span class="help-block">Select the script you want to execute and add parameters (see full script below for parameter order) </span>  
+          <span class="help-block">Select the script you want to execute and add parameters (see full script below for parameter order) </span>
           </div>
         </div>
 
-        
+
         </fieldset>
-        
+
         <!-- Button (Double) -->
         <div class="form-group">
           <label class="col-md-3 control-label" for="submit"></label>
@@ -259,7 +259,7 @@ foreach($audiofolders as $audiofolder) {
 <br/><br/>
 <label class="col-md-3 control-label" for="scriptfiles"></label>
 <?php
-// parse all scriptfiles with linebreaks into alterboxes and hide them for later unhiding via selectbox onchange 
+// parse all scriptfiles with linebreaks into alterboxes and hide them for later unhiding via selectbox onchange
 foreach($audiofolders as $audiofolder) {
 $perms = substr(decoct(fileperms($conf["scripts_abs"]."/userscripts/".basename($audiofolder))), 3);
 if(preg_match("([7|5|3|1])",$perms)) {$fcolor =""; }
@@ -276,7 +276,7 @@ print "</div>";
 <br/><br/>
 
 <script type="text/javascript">
- 
+
    var sel = document.getElementById('folder');
    sel.onchange = function() {
     // hide all scripts
@@ -293,10 +293,10 @@ print "</div>";
       </div><!-- / .col-lg-12 -->
 
     </div><!-- /.row -->
-    
-  
-        
-    
+
+
+
+
   </div><!-- /.container -->
 
 <?php

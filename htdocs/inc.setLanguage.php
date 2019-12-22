@@ -11,14 +11,14 @@ called in inc.header.php
 * Create up to date file if language was changed including the default English values
 */
 if(
-    isset($_POST['lang']) 
+    isset($_POST['lang'])
     && trim($_POST['lang']) != ""
     && trim($_POST['lang']) != "en-UK"
     ) {
     /**/
 
     $filename = realpath('lang/lang-'.$_POST['lang'].'.php');
-    
+
     $langPHP = "<?php\n\$lang = array();\n";
     foreach($langDef as $langKey => $langVal) {
         //$langPHP .= "// ".$langKey." => ".$langVal."\n";
@@ -52,7 +52,7 @@ foreach (glob("lang/*.php") as $filename) {
     $langAvail[substr($filename,-9,5)] = substr($filename,-9,5);
 }
 ?>
-        <!-- input-group --> 
+        <!-- input-group -->
         <div class="col-md-4 col-sm-6">
               <h4><?php print $lang['globalLang']; ?></h4>
 <?php
@@ -61,7 +61,7 @@ if(isset($messageLangfileNewItems)) {
               <h4>".$messageLangfileNewItems."</h4>
               ";
 }
-?>                
+?>
                 <form name='lang' method='post' action='<?php print $_SERVER['PHP_SELF']; ?>'>
                   <div class="input-group my-group">
                     <select id="lang" name="lang" class="form-control">
@@ -76,11 +76,11 @@ foreach($langAvail as $langItem) {
                         print "</option>\n";
 }
 ?>
-                    </select> 
+                    </select>
                     <span class="input-group-btn">
                         <input type='submit' class="btn btn-default" name='submit' value='<?php print $lang['globalSet']; ?>'/>
                     </span>
                   </div>
-                </form>              
+                </form>
         </div>
         <!-- /input-group -->

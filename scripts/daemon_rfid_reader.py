@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 
 import subprocess
-import os 
+import os
 from Reader import Reader
 
 reader = Reader()
@@ -26,4 +26,4 @@ while True:
             if cardid != None:
                 subprocess.call([dir_path + '/rfid_trigger_play.sh --cardid=' + cardid], shell=True)
         except OSError as e:
-            print "Execution failed:" 
+            print "Execution failed:"

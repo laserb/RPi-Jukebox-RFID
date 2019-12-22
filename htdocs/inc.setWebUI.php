@@ -23,13 +23,13 @@ if(isset($_POST['ShowCover']) && trim($_POST['ShowCover']) != "") {
         } else {
             exec($exec);
         }
-    } 
+    }
     // execute shell to create config file
     exec($conf['scripts_abs']."/inc.writeGlobalConfig.sh");
 }
 ?>
 
-<!-- input-group --> 
+<!-- input-group -->
 	<div class="row" style="margin-bottom:1em;">
 	  <div class="col-md-6 col-xs-12">
 	  <h4><?php print $lang['settingsCoverInfo']; ?></h4>
@@ -52,13 +52,13 @@ if(isset($_POST['ShowCover']) && trim($_POST['ShowCover']) != "") {
 				print ">".$lang['settingsShowCoverOFF'];
 				print "</option>\n";
 			?>
-			</select> 
+			</select>
 			<span class="input-group-btn">
 				<input type='submit' class="btn btn-default" name='submit' value='<?php print $lang['globalSet']; ?>'/>
 			</span>
 		  </div>
 		</form>
 	  </div>
-	  
+
 	</div><!-- ./row -->
 <!-- /input-group -->

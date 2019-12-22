@@ -4,7 +4,7 @@ for i in `atq | awk '{print $1}'`;do atrm $i;done
 #Give the RPi enough time to get the correct time via network
 #Otherwise there may be an immediate shutdown because this script may set a shutdown time dated in the past
 #in the first loop. If the Pi gets a correct time via network, "at" suddenly detects a overdue job, which is:
-#shutting down the Pi.  
+#shutting down the Pi.
 sleep 60
 
 PATHDATA="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"

@@ -1,7 +1,7 @@
 
 <?php
 if(
-    isset($_POST['debugLogConf']) 
+    isset($_POST['debugLogConf'])
     && is_array($_POST['debugLogConf'])
     ) {
         // create file

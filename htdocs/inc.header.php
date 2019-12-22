@@ -13,8 +13,8 @@ include("config.php");
 * this file is read by shell scripts and php
 */
 $debugAvail = array(
-"DEBUG_WebApp", 
-"DEBUG_WebApp_API", 
+"DEBUG_WebApp",
+"DEBUG_WebApp_API",
 "DEBUG_inc_readArgsFromCommandLine_sh",
 "DEBUG_inc_settingsFolderSpecific_sh",
 "DEBUG_inc_writeFolderConfig_sh",
@@ -100,7 +100,7 @@ if(!file_exists($conf['settings_abs']."/global.conf")) {
     // scripts/inc.writeGlobalConfig.sh
     exec($conf['scripts_abs']."/inc.writeGlobalConfig.sh");
     exec("chmod 777 ".$conf['settings_abs']."/global.conf");
-} 
+}
 
 // read the global conf file
 $globalConf = parse_ini_file($conf['settings_abs']."/global.conf", $process_sections = null);
@@ -297,13 +297,13 @@ foreach ($urlparams as $paramKey => $paramValue) {
 
 // enable resume
 if(isset($urlparams['enableresume']) && $urlparams['enableresume'] != "" && is_dir(urldecode($Audio_Folders_Path."/".$urlparams['enableresume']))) {
-    $exec = '/usr/bin/sudo '.$conf['scripts_abs'].'/resume_play.sh -c=enableresume -d="'.$urlparams['enableresume'].'"';
+    $exec = $conf['scripts_abs'].'/resume_play.sh -c=enableresume -d="'.$urlparams['enableresume'].'"';
     if($debug == "true") {
         print "Command: ".$exec;
     } else {
         // pass folder to resume script
         exec($exec);
-    
+
         /* redirect to drop all the url parameters */
         header("Location: ".$url_abs);
         exit;

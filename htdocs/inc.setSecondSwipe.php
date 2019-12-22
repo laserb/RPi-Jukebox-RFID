@@ -44,7 +44,7 @@ if(isset($_POST['secondSwipe']) && trim($_POST['secondSwipe']) != "") {
     exec($conf['scripts_abs']."/inc.writeGlobalConfig.sh");
 }
 ?>
-        <!-- input-group --> 
+        <!-- input-group -->
             <div class="row" style="margin-bottom:1em;">
               <div class="col-md-6 col-xs-12">
               <h4><?php print $lang['settingsSecondSwipeInfo']; ?></h4>
@@ -81,13 +81,13 @@ if(isset($_POST['secondSwipe']) && trim($_POST['secondSwipe']) != "") {
                         print ">".$lang['settingsSecondSwipeNoAudioPlay'];
                         print "</option>\n";
                     ?>
-                    </select> 
+                    </select>
                     <span class="input-group-btn">
                         <input type='submit' class="btn btn-default" name='submit' value='<?php print $lang['globalSet']; ?>'/>
                     </span>
                   </div>
                 </form>
               </div>
-              
+
             </div><!-- ./row -->
         <!-- /input-group -->

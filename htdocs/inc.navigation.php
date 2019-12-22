@@ -9,10 +9,10 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" style="padding: 19.5px 15px 0px; height: 0px;" href="index.php"><?php print $lang['navBrand']; ?></a><br>
-	  <div class="navbar-brand" style="padding: 0px 15px 0px; margin-top: 19.5px; height: 0px; font-size: 13px; color: white;"><?php 
-	  if ($edition == "classic") { 
-		print $lang['navEditionClassic']; 
-	  } elseif ($edition == "plusSpotify") { 
+	  <div class="navbar-brand" style="padding: 0px 15px 0px; margin-top: 19.5px; height: 0px; font-size: 13px; color: white;"><?php
+	  if ($edition == "classic") {
+		print $lang['navEditionClassic'];
+	  } elseif ($edition == "plusSpotify") {
 		print $lang['navEditionPlusSpotify'];
 	  }
 	  ?></div>
@@ -32,7 +32,7 @@
 		}
 		?>
       </ul>
-      
+
 <!-- sub menu -->
       <ul class="nav navbar-nav navbar-right">
         <li><a href='index.php?shutdown=true' class='mainMenu'><i class='mdi mdi-power'></i> <?php print $lang['navShutdown']; ?></a></li>

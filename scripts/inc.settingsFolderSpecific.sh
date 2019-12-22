@@ -18,7 +18,7 @@ PATHDATA="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 if [ "${DEBUG_inc_settingsFolderSpecific_sh}" == "TRUE" ]; then echo "  #START### SCRIPT inc.settingsFolderSpecific.sh ($NOW) ##" >> $PATHDATA/../logs/debug.log; fi
 
-# Get folder name of currently played audio 
+# Get folder name of currently played audio
 if [ "x${FOLDER}" == "x" ]
 then
   FOLDER=$(cat $PATHDATA/../settings/Latest_Folder_Played)
@@ -30,10 +30,10 @@ if [ -e "$AUDIOFOLDERSPATH/$FOLDER/folder.conf" ]
 then
     # Read the current config file (include will execute == read)
     . "$AUDIOFOLDERSPATH/$FOLDER/folder.conf"
-    
+
     if [ "${DEBUG_inc_settingsFolderSpecific_sh}" == "TRUE" ]; then echo "  # Folder exists: ${AUDIOFOLDERSPATH}/${FOLDER}/folder.conf" >> $PATHDATA/../logs/debug.log; fi
     if [ "${DEBUG_inc_settingsFolderSpecific_sh}" == "TRUE" ]; then cat "$AUDIOFOLDERSPATH/$FOLDER/folder.conf" >> $PATHDATA/../logs/debug.log; fi
-    
+
     # SINGLE TRACK PLAY (== shuffle can not be on, because single on will play one track after another)
     if [ "${DEBUG_inc_settingsFolderSpecific_sh}" == "TRUE" ]; then echo "  # SINGLE TRACK PLAY: $SINGLE" >> $PATHDATA/../logs/debug.log; fi
     if [ $SINGLE == "ON" ]
@@ -48,7 +48,7 @@ then
         # SHUFFLE FOLDER
         if [ "${DEBUG_inc_settingsFolderSpecific_sh}" == "TRUE" ]; then echo "  # SHUFFLE FOLDER: $SHUFFLE" >> $PATHDATA/../logs/debug.log; fi
         if [ $SHUFFLE == "ON" ]
-        then 
+        then
 		    if [ "${DEBUG_inc_settingsFolderSpecific_sh}" == "TRUE" ]; then echo "  # # CHANGING: mpc shuffle" >> $PATHDATA/../logs/debug.log; fi
             mpc shuffle
         else
@@ -56,7 +56,7 @@ then
             mpc random off
         fi
     fi
-    
+
 fi
 
 if [ "${DEBUG_inc_settingsFolderSpecific_sh}" == "TRUE" ]; then echo "  #END##### SCRIPT inc.settingsFolderSpecific.sh ($NOW) ##" >> $PATHDATA/../logs/debug.log; fi

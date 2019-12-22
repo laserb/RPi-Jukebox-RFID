@@ -17,7 +17,7 @@ class Flags_bits( ctypes.LittleEndianStructure ):
                  ("A", c_uint8, 1 ),  # asByte & 1
                  ("B", c_uint8, 1 ),  # asByte & 2
                 ]
- 
+
 class Flags( ctypes.Union ):
      _anonymous_ = ("bit",)
      _fields_ = [

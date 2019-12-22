@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # This is a mpd idle watchdog to shutdown the box.
-# 
+#
 # Phonieboxes without reliable system time can use this idle-watchdog-script to
 # shutdown the box after a pre defined number of minutes.
 # This script checks every 60 seconds if mpd is paying music with volume set to
 # greater than 0. If not it decreases the pre-defined number of minutes and shut
 # down the box if it reaches zero.
-# Be aware that playing lots of short sequences (less than 60 seconds) could be 
+# Be aware that playing lots of short sequences (less than 60 seconds) could be
 # undetected by this script and lead to an unwanted shutdown.
 
 # Check for idle time settings. Assume to disable automatic shudown if not set.

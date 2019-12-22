@@ -173,14 +173,14 @@ function html_bootstrap3_createHeader($lang="en",$title="Welcome",$url_absolute=
             margin-right: 1em
         }
         /* anchor behaviour */
-        
+
         /* flash briefly on click */
         .panel-heading a.btn-panel-big:active {
             color: #fff!important;
         }
         .panel-heading a.btn-panel-big {
             cursor: pointer;
-        } 
+        }
         </style>
 
     </head>\n";
@@ -191,7 +191,7 @@ function tailShell($filepath, $lines = 1) {
 	passthru('tail -'  . $lines . ' ' . escapeshellarg($filepath));
 	return trim(ob_get_clean());
 }
-	
+
 function arrayPregDiff($a, $p) {
     # added function to use regular expressions to remove multiple files
     # e.g. all of the same file type from the array forming the later playlist.

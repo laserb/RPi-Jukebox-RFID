@@ -4,17 +4,17 @@
 # playout and change volume and the like.
 # This script is called from the web app and the bash script.
 # The purpose is to have all playout logic in one place, this
-# makes further development and potential replacement of 
+# makes further development and potential replacement of
 # the playout player easier.
 
 # Set the date and time of now
 NOW=`date +%Y-%m-%d.%H:%M:%S`
 
 # USAGE EXAMPLES:
-# 
+#
 # shutdown RPi:
 # ./playout_controls.sh -c=shutdown
-# 
+#
 # set volume to 80%
 # ./playout_controls.sh -c=setvolume -v=80
 #
@@ -72,7 +72,7 @@ PATHDATA="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 if [ "${DEBUG_playout_controls_sh}" == "TRUE" ]; then echo "########### SCRIPT playout_controls.sh ($NOW) ##" >> $PATHDATA/../logs/debug.log; fi
 
 ###########################################################
-# Read global configuration file (and create is not exists) 
+# Read global configuration file (and create is not exists)
 # create the global configuration file from single files - if it does not exist
 if [ ! -f $PATHDATA/../settings/global.conf ]; then
     . $PATHDATA/inc.writeGlobalConfig.sh
@@ -110,7 +110,7 @@ VOLFILE=$PATHDATA/../settings/Audio_Volume_Level
 if [ "${DEBUG_playout_controls_sh}" == "TRUE" ]; then echo "VAR COMMAND: $COMMAND" >> $PATHDATA/../logs/debug.log; fi
 if [ "${DEBUG_playout_controls_sh}" == "TRUE" ]; then echo "VAR VALUE: $VALUE" >> $PATHDATA/../logs/debug.log; fi
 
-case $COMMAND in 
+case $COMMAND in
     shutdown)
         if [ "${DEBUG_playout_controls_sh}" == "TRUE" ]; then echo "   shutdown" >> $PATHDATA/../logs/debug.log; fi
         $PATHDATA/resume_play.sh -c=savepos && mpc clear
@@ -118,7 +118,7 @@ case $COMMAND in
         SHUFFLE_STATUS=$(echo -e status\\nclose | nc -w 1 localhost 6600 | grep -o -P '(?<=random: ).*')
         if [ "$SHUFFLE_STATUS" == 1 ] ; then  mpc random off; fi
         sleep 1
-        /usr/bin/mpg123 $PATHDATA/../shared/shutdownsound.mp3 
+        /usr/bin/mpg123 $PATHDATA/../shared/shutdownsound.mp3
         sleep 3
         poweroff
         ;;
@@ -138,7 +138,7 @@ case $COMMAND in
         then
             # shutdown pi after $VALUE minutes
             echo "$PATHDATA/playout_controls.sh -c=shutdownsilent" | at -q t now + $VALUE minute
-        fi 
+        fi
         ;;
     reboot)
         $PATHDATA/resume_play.sh -c=savepos && mpc clear
@@ -166,7 +166,7 @@ case $COMMAND in
         else
             # $VOLFILE DOES exist == audio off
             # read volume level from $VOLFILE and set as percent
-            echo -e setvol `<$VOLFILE`\\nclose | nc -w 1 localhost 6600        
+            echo -e setvol `<$VOLFILE`\\nclose | nc -w 1 localhost 6600
             # delete $VOLFILE
             rm -f $VOLFILE
         fi
@@ -209,7 +209,7 @@ case $COMMAND in
             # read volume in percent
             VOLPERCENT=$(echo -e status\\nclose | nc -w 1 localhost 6600 | grep -o -P '(?<=volume: ).*')
             # increase by $AUDIOVOLCHANGESTEP
-            VOLPERCENT=`expr ${VOLPERCENT} + \( ${AUDIOVOLCHANGESTEP} \* ${VALUE} \)` 
+            VOLPERCENT=`expr ${VOLPERCENT} + \( ${AUDIOVOLCHANGESTEP} \* ${VALUE} \)`
             #increase volume only if VOLPERCENT is below the max volume limit
             if [ $VOLPERCENT -le $AUDIOVOLMAXLIMIT ];
             then
@@ -246,7 +246,7 @@ case $COMMAND in
             # read volume in percent
             VOLPERCENT=$(echo -e status\\nclose | nc -w 1 localhost 6600 | grep -o -P '(?<=volume: ).*')
             # decrease by $AUDIOVOLCHANGESTEP
-            VOLPERCENT=`expr ${VOLPERCENT} - \( ${AUDIOVOLCHANGESTEP} \* ${VALUE} \)` 
+            VOLPERCENT=`expr ${VOLPERCENT} - \( ${AUDIOVOLCHANGESTEP} \* ${VALUE} \)`
             #decrease volume only if VOLPERCENT is above the min volume limit
             if [ $VOLPERCENT -ge $AUDIOVOLMINLIMIT ];
             then
@@ -272,13 +272,13 @@ case $COMMAND in
     setmaxvolume)
         # read volume in percent
         VOLPERCENT=$(echo -e status\\nclose | nc -w 1 localhost 6600 | grep -o -P '(?<=volume: ).*')
-        # if volume of the box is greater than wanted maxvolume, set volume to maxvolume 
+        # if volume of the box is greater than wanted maxvolume, set volume to maxvolume
         if [ $VOLPERCENT -gt $VALUE ];
         then
             echo -e setvol $VALUE | nc -w 1 localhost 6600
         fi
         # write new value to file
-        echo "$VALUE" > $PATHDATA/../settings/Max_Volume_Limit       
+        echo "$VALUE" > $PATHDATA/../settings/Max_Volume_Limit
         # create global config file because individual setting got changed
         . $PATHDATA/inc.writeGlobalConfig.sh
         ;;
@@ -287,7 +287,7 @@ case $COMMAND in
         ;;
     setvolstep)
         # write new value to file
-        echo "$VALUE" > $PATHDATA/../settings/Audio_Volume_Change_Step       
+        echo "$VALUE" > $PATHDATA/../settings/Audio_Volume_Change_Step
         # create global config file because individual setting got changed
         . $PATHDATA/inc.writeGlobalConfig.sh
         ;;
@@ -360,10 +360,10 @@ case $COMMAND in
         mpc seek 0
         ;;
     playerrepeat)
-        # repeats a single track or a playlist. 
+        # repeats a single track or a playlist.
         # Remark: If "single" is "on" but "repeat" is "off", the playout stops after the current song.
         # This command may be called with ./playout_controls.sh -c=playerrepeat -v=single, playlist or off
-        case $VALUE in     
+        case $VALUE in
             single)
                 mpc repeat on
                 mpc single on
@@ -405,10 +405,10 @@ case $COMMAND in
         mpc clear
         mpc load "${VALUE//\//SLASH}"
         if [ "${DEBUG_playout_controls_sh}" == "TRUE" ]; then echo "mpc load "${VALUE//\//SLASH} >> $PATHDATA/../logs/debug.log; fi
-        
+
         # Change some settings according to current folder IF the folder.conf exists
         #. $PATHDATA/inc.settingsFolderSpecific.sh
-        
+
         # check if we switch to single file playout
         $PATHDATA/single_play.sh -c=single_check -d="${FOLDER}"
 
@@ -419,7 +419,6 @@ case $COMMAND in
         $PATHDATA/resume_play.sh -c=resume -d="${FOLDER}"
         if [ "${DEBUG_playout_controls_sh}" == "TRUE" ]; then echo "mpc load "${VALUE//\//SLASH}" && $PATHDATA/resume_play.sh -c=resume -d="${FOLDER}"" >> $PATHDATA/../logs/debug.log; fi
 
-        
         # write latest folder played to settings file
         echo ${FOLDER} > $PATHDATA/../settings/Latest_Folder_Played
         chmod 777 $PATHDATA/../settings/Latest_Folder_Played
@@ -427,14 +426,14 @@ case $COMMAND in
         if [ "${DEBUG_playout_controls_sh}" == "TRUE" ]; then echo "  VAR Latest_Folder_Played: ${FOLDER}" >> $PATHDATA/../logs/debug.log; fi
         if [ "${DEBUG_playout_controls_sh}" == "TRUE" ]; then echo "  # end playout_controls.sh playlistaddplay" >> $PATHDATA/../logs/debug.log; fi
 
-        # OLD VERSION (pre 20190302 - delete once the new version really seems to work): 
-        # call shuffle_check HERE to enable/disable folder-based shuffling 
-        # (mpc shuffle is different to random, because when you shuffle before playing, 
-        # you start your playlist with a different track EVERYTIME. With random you EVER 
+        # OLD VERSION (pre 20190302 - delete once the new version really seems to work):
+        # call shuffle_check HERE to enable/disable folder-based shuffling
+        # (mpc shuffle is different to random, because when you shuffle before playing,
+        # you start your playlist with a different track EVERYTIME. With random you EVER
         # has the first song and random from track 2.
         #mpc load "${VALUE//\//SLASH}" && $PATHDATA/shuffle_play.sh -c=shuffle_check && $PATHDATA/single_play.sh -c=single_check && $PATHDATA/resume_play.sh -c=resume
         #mpc load "${VALUE//\//SLASH}" && $PATHDATA/single_play.sh -c=single_check  && $PATHDATA/resume_play.sh -c=resume
-        
+
         ;;
     playlistadd)
         # add to playlist, no autoplay
@@ -472,14 +471,14 @@ case $COMMAND in
             rfkill unblock wifi
         fi
         ;;
-    recordstart)    
+    recordstart)
         #mkdir $AUDIOFOLDERSPATH/Recordings
         #kill the potential current playback
         pkill aplay
-        #start recorder if not already started 
+        #start recorder if not already started
         if ! pgrep -x "arecord" > /dev/null
-        then    
-            echo "start recorder"    
+        then
+            echo "start recorder"
             arecord -D plughw:1 --duration=$VALUE -f cd -vv $AUDIOFOLDERSPATH/Recordings/$(date +"%Y-%m-%d_%H-%M-%S").wav &
         else
             echo "device is already recording"

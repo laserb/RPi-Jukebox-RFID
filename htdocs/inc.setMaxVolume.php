@@ -1,7 +1,7 @@
 <!--
 Maximum Volume Select Form
 -->
-        <!-- input-group -->          
+        <!-- input-group -->
         <?php
         //$maxvolumevalue = 43.6;//debug
         $maxvalueselect = round(($maxvolumevalue/5))*5;
@@ -23,18 +23,18 @@ Maximum Volume Select Form
                             print " selected";
                         }
                         print ">".$i."%</option>";
-                        $i = $i - 5;  
+                        $i = $i - 5;
                     };
                     print "\n";
                     ?>
-                    </select> 
+                    </select>
                     <span class="input-group-btn">
                         <input type='submit' class="btn btn-default" name='submit' value='<?php print $lang['globalSet']; ?>'/>
                     </span>
                   </div>
                 </form>
               </div>
-              
+
               <div class="col-xs-6">
                   <div class="c100 p<?php print $maxvaluedisplay; ?>">
                     <span><?php print $maxvaluedisplay; ?>%</span>
@@ -42,7 +42,7 @@ Maximum Volume Select Form
                         <div class="bar"></div>
                         <div class="fill"></div>
                     </div>
-                  </div> 
+                  </div>
               </div>
             </div><!-- ./row -->
         </div>

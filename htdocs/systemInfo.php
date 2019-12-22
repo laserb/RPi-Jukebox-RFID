@@ -17,9 +17,9 @@ include("inc.navigation.php");
 
 // get System Information and parse into variables
 $exec = "lsb_release -a";
-if($debug == "true") { 
-		print "Command: ".$exec; 
-} else { 
+if($debug == "true") {
+		print "Command: ".$exec;
+} else {
 		exec($exec, $res);
 		$distributor = substr($res[0],strpos($res[0],":")+1,strlen($res[0])-strpos($res[0],":"));
 		$description = substr($res[1],strpos($res[1],":")+1,strlen($res[1])-strpos($res[1],":"));
@@ -31,28 +31,28 @@ if($debug == "true") {
   <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">
-         <i class='mdi mdi-settings'></i> <?php print $lang['globalSystem']; ?> 
+         <i class='mdi mdi-settings'></i> <?php print $lang['globalSystem']; ?>
       </h4>
     </div><!-- /.panel-heading -->
 
     <div class="panel-body">
-  
-        <div class="row">	
-          <label class="col-md-4 control-label" for=""><?php print $lang['infoOsDistrib']; ?></label> 
+
+        <div class="row">
+          <label class="col-md-4 control-label" for=""><?php print $lang['infoOsDistrib']; ?></label>
           <div class="col-md-6"><?php echo trim($distributor); ?></div>
         </div><!-- / row -->
-        <div class="row">	
-          <label class="col-md-4 control-label" for=""><?php print $lang['globalDescription']; ?></label> 
+        <div class="row">
+          <label class="col-md-4 control-label" for=""><?php print $lang['globalDescription']; ?></label>
           <div class="col-md-6"><?php echo trim($description); ?></div>
         </div><!-- / row -->
-        <div class="row">	
-          <label class="col-md-4 control-label" for=""><?php print $lang['globalRelease']; ?></label> 
+        <div class="row">
+          <label class="col-md-4 control-label" for=""><?php print $lang['globalRelease']; ?></label>
           <div class="col-md-6"><?php echo trim($release); ?></div>
         </div><!-- / row -->
-        <div class="row">	
-          <label class="col-md-4 control-label" for=""><?php print $lang['infoOsCodename']; ?></label> 
+        <div class="row">
+          <label class="col-md-4 control-label" for=""><?php print $lang['infoOsCodename']; ?></label>
           <div class="col-md-6"><?php echo trim($codename); ?></div>
-        </div>     
+        </div>
 	</div><!-- /.panel-body -->
   </div><!-- /.panel panel-default-->
 </div><!-- /.panel-group -->
@@ -66,29 +66,29 @@ if($debug == "true") {
     </div><!-- /.panel-heading -->
 
     <div class="panel-body">
-  
-        <div class="row">	
-          <label class="col-md-4 control-label" for=""><?php print $lang['globalVersion']; ?></label> 
+
+        <div class="row">
+          <label class="col-md-4 control-label" for=""><?php print $lang['globalVersion']; ?></label>
           <div class="col-md-6"><?php echo $version; ?></div>
         </div><!-- / row -->
-        <div class="row">	
-          <label class="col-md-4 control-label" for=""><?php print $lang['globalEdition']; ?></label> 
+        <div class="row">
+          <label class="col-md-4 control-label" for=""><?php print $lang['globalEdition']; ?></label>
           <div class="col-md-6"><?php echo $lang[$edition]; ?></div>
         </div><!-- / row -->
-		<div class="row">	
+		<div class="row">
           <label class="col-md-4 control-label" for="">
 		  <?php
 		  if ($edition == "classic") {
-			  print $lang['infoMPDStatus']."</label> 
+			  print $lang['infoMPDStatus']."</label>
 		  <div id='mpdstatus'></div>";
 		  } elseif ($edition == "plusSpotify") {
-			  print $lang['infoMopidyStatus']."</label> 
+			  print $lang['infoMopidyStatus']."</label>
 		  <div id='mopidystatus'></div>";
 		  }
 		  ?>
 		</div>
 		<!-- / row -->
-      
+
 	</div><!-- /.panel-body -->
   </div><!-- /.panel panel-default-->
 </div><!-- /.panel-group -->
@@ -121,9 +121,9 @@ $(document).ready(function() {
 <?php
 // get the information of storage usage
 $exec = "df -H -B K / ";
-    if($debug == "true") { 
-        print "Command: ".$exec; 
-    } else { 
+    if($debug == "true") {
+        print "Command: ".$exec;
+    } else {
 				$exploded = preg_split("/ +/", exec($exec));
 				// all values are in MeBit
         $all = round(Trim(substr($exploded[1],0,Strpos($exploded[1],"K")))/1024, 2);
@@ -142,12 +142,12 @@ $exec = "df -H -B K / ";
 
 		<div class="panel-body">
 
-		<?php	
+		<?php
 			// get information about the shared folder to calculate media size
 			$exec = "du -H -B K -s ".$conf['base_path']."/shared/";
-			if($debug == "true") { 
-					print "Command: ".$exec; 
-			} else { 
+			if($debug == "true") {
+					print "Command: ".$exec;
+			} else {
 					$res = exec($exec);
 					$exploded = explode("/", $res);
 					$Media = round(Trim(substr($exploded[0],0,Strpos($exploded[0],"K")))/1024, 2);
@@ -186,12 +186,12 @@ $exec = "df -H -B K / ";
     </div><!-- /.panel-heading -->
 
     <div class="panel-body">
-    
+
         <?php
         $res = tailShell("../logs/debug.log", 40);
         print "<pre>\n".$res."\n</pre>";
         ?>
-    
+
 	</div><!-- /.panel-body -->
   </div><!-- /.panel -->
 </div><!-- /.panel-group -->

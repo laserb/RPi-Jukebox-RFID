@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script saves or restores the SINGLE status in a playlist (=folder) and enables/disables 
+# This script saves or restores the SINGLE status in a playlist (=folder) and enables/disables
 # single mode according to the folder.conf of the current folder/playlist
 # Usage:
 # Enable single mode for folder: ./single_play-sh -c=enablesingle -v=foldername_in_audiofolders

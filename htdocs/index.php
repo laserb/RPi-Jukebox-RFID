@@ -49,7 +49,7 @@ include("inc.loadedPlaylist.php");
       <div class="col-lg-12">
 <?php
 include("inc.setVolume.php");
-?>      
+?>
     </div><!-- ./col-lg-12 -->
     </div><!-- ./row -->
 
@@ -80,15 +80,15 @@ $idcounter = 0;
 foreach($audiofolders as $audiofolder) {
     // increase ID counter
     $idcounter++;
-    
+
     include('inc.viewFolderTree.php');
-    
+
 }
 
 ?>
 
       </div><!-- / .col-lg-12 -->
-        <!-- input-group -->          
+        <!-- input-group -->
           <div class="col-md-4 col-sm-6">
             <div class="row" style="margin-bottom:1em;">
               <div class="col-xs-12">
@@ -99,10 +99,10 @@ foreach($audiofolders as $audiofolder) {
               </div>
             </div><!-- ./row -->
         </div><!-- ./col -->
-        <!-- /input-group --> 
-	      
+        <!-- /input-group -->
+
     </div><!-- /.row -->
-    
+
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
@@ -121,7 +121,7 @@ print file_get_contents($conf['base_path'].'/shared/latestID.txt', true);
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal"><!--?php print $lang['globalClose']; ?--></button>
           </div>
-    
+
         </div><!-- / .modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->

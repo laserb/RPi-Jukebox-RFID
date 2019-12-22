@@ -10,9 +10,9 @@ $Audio_Folders_Path = realpath(trim(file_get_contents($conf['settings_abs'].'/Au
 //print $_GET['rss'];
 
 /* $sortby sets the order in which tracks are listed. */
-$sortby = "filedesc"; 
+$sortby = "filedesc";
 /*
-    Options: 
+    Options:
     "newest" = newest on top
     "oldest" = oldest on top
     "filedesc" = alphabetically descending
@@ -73,7 +73,7 @@ function phoniepodcastxml($filesMp3, $title) {
     <link>".$conf['url_abs']."/rss-mp3.php?rss=".serialize($filesMp3)."</link>
     <itunes:author>Phoniebox</itunes:author>
   ";
-  
+
   // go through files and create <item> for podcast
   foreach ($filesMp3 as $fileMp3) {
 /*
