@@ -3,7 +3,7 @@ Volume Up/Down Percent Form
 -->
         <!-- input-group -->          
         <?php
-        $volstepvalue = exec("/usr/bin/sudo ".$conf['scripts_abs']."/playout_controls.sh -c=getvolstep");
+        $volstepvalue = exec($conf['scripts_abs']."/playout_controls.sh -c=getvolstep");
         //$volstepvalue = 3.6;//debug
         $volstepvalueselect = round($volstepvalue);
         $volstepvaluedisplay = round($volstepvalue);

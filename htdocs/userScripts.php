@@ -61,10 +61,10 @@ $messageWarning = "";
 
 if($_POST['ACTION'] == "userScript") {
 
-$messageAction .= "Executed 'sudo ".$conf['scripts_abs']."/userscripts/".$post['folder']." ".$post['folderNew']."'";
- // funktionstest // $exec = "sudo mkdir '".$Audio_Folders_Path."/".$post['folderNew']."'; sudo touch '".$Audio_Folders_Path."/".$post['folderNew']."/'".$post['folder'];
- 
-            $exec = "sudo ".$conf['scripts_abs']."/userscripts/".$post['folder']." ".$post['folderNew'];
+$messageAction .= "Executed '".$conf['scripts_abs']."/userscripts/".$post['folder']." ".$post['folderNew']."'";
+ // funktionstest // $exec = "mkdir '".$Audio_Folders_Path."/".$post['folderNew']."'; touch '".$Audio_Folders_Path."/".$post['folderNew']."/'".$post['folder'];
+
+            $exec = $conf['scripts_abs']."/userscripts/".$post['folder']." ".$post['folderNew'];
             exec($exec);
 
 }
@@ -109,7 +109,7 @@ if($_POST['ACTION'] == "fileUpload") {
             // yes, valid new folder 
             $messageAction .= "Will create new folder and move files to: '".$post['folderNew']."'";
             // create folder
-            $exec = "sudo mkdir ".$Audio_Folders_Path."/".$post['folderNew']."; sudo chmod 777 ".$Audio_Folders_Path."/".$post['folderNew'];
+            $exec = "mkdir ".$Audio_Folders_Path."/".$post['folderNew']."; chmod 777 ".$Audio_Folders_Path."/".$post['folderNew'];
             exec($exec);
             $moveFolder = $Audio_Folders_Path."/".$post['folderNew'];
     } else {

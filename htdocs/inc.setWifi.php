@@ -90,17 +90,16 @@ if(isset($_POST["submitWifi"]) && $_POST["submitWifi"] == "submit") {
 
     // make multiline bash
     $exec  = "bash -e <<'END'\n";
-    $exec .= "echo 'ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev\nupdate_config=1\ncountry=DE\n\n' | sudo tee /etc/wpa_supplicant/wpa_supplicant.conf\n";
+    $exec .= "echo 'ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev\nupdate_config=1\ncountry=DE\n\n' | tee /etc/wpa_supplicant/wpa_supplicant.conf\n";
     foreach ( $networks as $WIFIssid => $WIFIpass ) {
         $WIFIprio = $priorities[$WIFIssid];
         if (strlen($WIFIpass) < 64) {
             $WIFIpass = trim(exec("wpa_passphrase '".$WIFIssid."' '".$WIFIpass."' | grep -v -F '#psk' | grep -F 'psk' | cut -d= -f2"));
         }
-        $exec .= "echo 'network={\n\tssid=\"".$WIFIssid."\"\n\tpsk=".$WIFIpass."\n\tpriority=".$WIFIprio."\n}' | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf\n";
+        $exec .= "echo 'network={\n\tssid=\"".$WIFIssid."\"\n\tpsk=".$WIFIpass."\n\tpriority=".$WIFIprio."\n}' | tee -a /etc/wpa_supplicant/wpa_supplicant.conf\n";
     }
 
-    $exec .= "sudo chown root:netdev /etc/wpa_supplicant/wpa_supplicant.conf\n";
-    $exec .= "sudo chmod 664 /etc/wpa_supplicant/wpa_supplicant.conf\n";
+    $exec .= "chmod 664 /etc/wpa_supplicant/wpa_supplicant.conf\n";
     $exec .= "END\n";
     exec($exec);
 }

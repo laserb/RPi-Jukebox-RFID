@@ -12,13 +12,13 @@ Idle Shutdown Set Form
         /*
         * Get idle time value
         */
-        $idletimevalue = exec("/usr/bin/sudo ".$conf['scripts_abs']."/playout_controls.sh -c=getidletime");
+        $idletimevalue = exec($conf['scripts_abs']."/playout_controls.sh -c=getidletime");
         //$idletimevalue = 20;// debug
         /*
         * Now get the remaining time
         */
         if ($idletimevalue != "0") {
-            $shutdowntime = exec("sudo atq -q i | awk '{print $5}'");
+            $shutdowntime = exec("atq -q i | awk '{print $5}'");
             $unixtime = time();
             /*
             * For the night owls: if the shutdown time is after midnight (and so on the next day), 

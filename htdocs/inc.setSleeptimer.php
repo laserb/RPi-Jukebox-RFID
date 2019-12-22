@@ -11,7 +11,7 @@ Sleep Timer Set Form
         /*
         * Get sleeptimer value
         */
-        $sleeptimervalue = exec("sudo atq -q t | awk '{print $5}'");
+        $sleeptimervalue = exec("atq -q t | awk '{print $5}'");
         if ($sleeptimervalue != "") {
             $unixtime = time();
             /*

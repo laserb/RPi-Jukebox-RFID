@@ -120,7 +120,7 @@ case $COMMAND in
         sleep 1
         /usr/bin/mpg123 $PATHDATA/../shared/shutdownsound.mp3 
         sleep 3
-        sudo poweroff
+        poweroff
         ;;
     shutdownsilent)
         # doesn't play a shutdown sound
@@ -128,11 +128,11 @@ case $COMMAND in
         #remove shuffle mode if active
         SHUFFLE_STATUS=$(echo -e status\\nclose | nc -w 1 localhost 6600 | grep -o -P '(?<=random: ).*')
         if [ "$SHUFFLE_STATUS" == 1 ] ; then  mpc random off; fi
-        sudo poweroff
+        poweroff
         ;;
     shutdownafter)
         # remove shutdown times if existent
-        for i in `sudo atq -q t | awk '{print $1}'`;do sudo atrm $i;done
+        for i in `atq -q t | awk '{print $1}'`;do atrm $i;done
         # -c=shutdownafter -v=0 is to remove the shutdown timer
         if [ $VALUE -gt 0 ];
         then
@@ -145,16 +145,16 @@ case $COMMAND in
         #remove shuffle mode if active
         SHUFFLE_STATUS=$(echo -e status\\nclose | nc -w 1 localhost 6600 | grep -o -P '(?<=random: ).*')
         if [ "$SHUFFLE_STATUS" == 1 ] ; then  mpc random off; fi
-        sudo reboot
+        reboot
         ;;
     scan)
         $PATHDATA/resume_play.sh -c=savepos && mpc clear
         #remove shuffle mode if active
         SHUFFLE_STATUS=$(echo -e status\\nclose | nc -w 1 localhost 6600 | grep -o -P '(?<=random: ).*')
         if [ "$SHUFFLE_STATUS" == 1 ] ; then  mpc random off; fi
-        sudo systemctl stop mopidy
-        sudo mopidyctl local scan
-        sudo systemctl start mopidy
+        systemctl stop mopidy
+        mopidyctl local scan
+        systemctl start mopidy
         ;;
     mute)
         if [ ! -f $VOLFILE ]; then
@@ -297,15 +297,11 @@ case $COMMAND in
     playerstop)
         # stop the player
         $PATHDATA/resume_play.sh -c=savepos && mpc stop
-        #if [ -e $AUDIOFOLDERSPATH/playing.txt ]
-        #then
-        #    sudo rm $AUDIOFOLDERSPATH/playing.txt
-        #fi
         if [ "${DEBUG_playout_controls_sh}" == "TRUE" ]; then echo "remove playing.txt" >> $PATHDATA/../logs/debug.log; fi
         ;;
     playerstopafter)
         # remove playerstop timer if existent
-        for i in `sudo atq -q s | awk '{print $1}'`;do sudo atrm $i;done
+        for i in `atq -q s | awk '{print $1}'`;do atrm $i;done
         # stop player after $VALUE minutes
         if [ $VALUE -gt 0 ];
         then
@@ -422,10 +418,11 @@ case $COMMAND in
         # Now load and play
         $PATHDATA/resume_play.sh -c=resume -d="${FOLDER}"
         if [ "${DEBUG_playout_controls_sh}" == "TRUE" ]; then echo "mpc load "${VALUE//\//SLASH}" && $PATHDATA/resume_play.sh -c=resume -d="${FOLDER}"" >> $PATHDATA/../logs/debug.log; fi
+
         
         # write latest folder played to settings file
-        sudo echo ${FOLDER} > $PATHDATA/../settings/Latest_Folder_Played
-        sudo chmod 777 $PATHDATA/../settings/Latest_Folder_Played
+        echo ${FOLDER} > $PATHDATA/../settings/Latest_Folder_Played
+        chmod 777 $PATHDATA/../settings/Latest_Folder_Played
         if [ "${DEBUG_playout_controls_sh}" == "TRUE" ]; then echo "  echo ${FOLDER} > $PATHDATA/../settings/Latest_Folder_Played" >> $PATHDATA/../logs/debug.log; fi
         if [ "${DEBUG_playout_controls_sh}" == "TRUE" ]; then echo "  VAR Latest_Folder_Played: ${FOLDER}" >> $PATHDATA/../logs/debug.log; fi
         if [ "${DEBUG_playout_controls_sh}" == "TRUE" ]; then echo "  # end playout_controls.sh playlistaddplay" >> $PATHDATA/../logs/debug.log; fi
@@ -450,7 +447,7 @@ case $COMMAND in
         # create global config file because individual setting got changed
         . $PATHDATA/inc.writeGlobalConfig.sh
         # restart service to apply the new value
-        sudo systemctl restart phoniebox-idle-watchdog.service &
+        systemctl restart phoniebox-idle-watchdog.service &
         ;;
     getidletime)
         echo $IDLETIMESHUTDOWN
@@ -478,7 +475,7 @@ case $COMMAND in
     recordstart)    
         #mkdir $AUDIOFOLDERSPATH/Recordings
         #kill the potential current playback
-        sudo pkill aplay
+        pkill aplay
         #start recorder if not already started 
         if ! pgrep -x "arecord" > /dev/null
         then    
@@ -490,12 +487,12 @@ case $COMMAND in
         ;;
     recordstop)
         #kill arecord instances
-        sudo pkill arecord
+        pkill arecord
         ;;
         recordplaylatest)
         #kill arecord and aplay instances
-        sudo pkill arecord
-        sudo pkill aplay
+        pkill arecord
+        pkill aplay
         aplay `ls $AUDIOFOLDERSPATH/Recordings/*.wav -1t|head -1`
         ;;
     *)

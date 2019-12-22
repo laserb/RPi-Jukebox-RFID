@@ -6,54 +6,6 @@
 * If you want to change the paths, edit config.php
 ***************************************************/
 
-/* NO CHANGES BENEATH THIS LINE ***********/
-/*
-* Configuration file
-* Due to an initial commit with the config file 'config.php' and NOT 'config.php.sample'
-* we need to check first if the config file exists (it might get erased by 'git pull').
-* If it does not exist:
-* a) copy sample file to config.php and give warning
-* b) if sample file does not exist: throw error and die
-*/
-if(!file_exists("config.php")) {
-    if(!file_exists("config.php.sample")) {
-        // no config nor sample config found. die.
-        print "<h1>Configuration file not found</h1>
-            <p>The files 'config.php' and 'config.php.sample' were not found in the
-            directory 'htdocs'. Please download 'htdocs/config.php.sample' from the 
-            <a href='https://github.com/MiczFlor/RPi-Jukebox-RFID/'>online repository</a>,
-            copy it locally to 'htdocs/config.php' and then adjust it to fit your system.</p>";
-        die;
-    } else {
-        // no config but sample config found: make copy (and give warning)
-        if(!(copy("config.php.sample", "config.php"))) {
-            // sample config can not be copied. die.
-            print "<h1>Configuration file could not be created</h1>
-                <p>The file 'config.php' was not found in the
-                directory 'htdocs'. Attempting to create this file from 'config.php.sample'
-                resulted in an error. </p>
-                <p>
-                Are the folder settings correct? You could try to run the following commands
-                inside the folder 'RPi-Jukebox-RFID' and then reload the page:<br/>
-                <pre>
-sudo chmod -R 775 htdocs/
-sudo chgrp -R www-data htdocs/
-                </pre>
-                </p>
-                Alternatively, download 'htdocs/config.php.sample' from the 
-                <a href='https://github.com/MiczFlor/RPi-Jukebox-RFID/'>online repository</a>,
-                copy it locally to 'htdocs/config.php' and then adjust it to fit your system.</p>";
-            die;
-        } else {
-            $warning = "<h4>Configuration file created</h4>
-                <p>The file 'config.php' was not found in the
-                directory 'htdocs'. A copy of the sample file 'config.php.sample' was made automatically.
-                If you encounter any errors, edit the newly created 'config.php'.
-                </p>
-            ";
-        }
-    }
-}
 include("config.php");
 
 /*
@@ -288,49 +240,49 @@ if(isset($_GET['delete']) && $_GET['delete'] == "delete") {
 *******************************************/
 
 $commandToAction = array(
-    'volume' => "/usr/bin/sudo ".$conf['scripts_abs']."/playout_controls.sh -c=setvolume -v=%s",            // change volume
-    'maxvolume' => "/usr/bin/sudo ".$conf['scripts_abs']."/playout_controls.sh -c=setmaxvolume -v=%s",      // change max volume
-    'volstep' => "/usr/bin/sudo ".$conf['scripts_abs']."/playout_controls.sh -c=setvolstep -v=%s",          // change volume step
-    'mute' => "/usr/bin/sudo ".$conf['scripts_abs']."/playout_controls.sh -c=mute",                         // volume mute (toggle)
-    'volumeup' => "/usr/bin/sudo ".$conf['scripts_abs']."/playout_controls.sh -c=volumeup",                 // volume up
-    'volumedown' => "/usr/bin/sudo ".$conf['scripts_abs']."/playout_controls.sh -c=volumedown",             // volume down
-    'idletime' => "/usr/bin/sudo ".$conf['scripts_abs']."/playout_controls.sh -c=setidletime -v=%s",        // set idletime
-    'shutdownafter' => "/usr/bin/sudo ".$conf['scripts_abs']."/playout_controls.sh -c=shutdownafter -v=%s", // set shutdownafter time (sleeptimer)
-    'stopplayoutafter' => "/usr/bin/sudo ".$conf['scripts_abs']."/playout_controls.sh -c=playerstopafter -v=%s",// set playerstopafter time (auto stop timer)
-    'playpos' => "/usr/bin/sudo ".$conf['scripts_abs']."/playout_controls.sh -c=playerplay -v=%s",          // play from playlist position,
-    'DebugLogClear' => "sudo rm ../logs/debug.log; sudo touch ../logs/debug.log; sudo chmod 777 ../logs/debug.log",
+    'volume' => $conf['scripts_abs']."/playout_controls.sh -c=setvolume -v=%s",            // change volume
+    'maxvolume' => $conf['scripts_abs']."/playout_controls.sh -c=setmaxvolume -v=%s",      // change max volume
+    'volstep' => $conf['scripts_abs']."/playout_controls.sh -c=setvolstep -v=%s",          // change volume step
+    'mute' => $conf['scripts_abs']."/playout_controls.sh -c=mute",                         // volume mute (toggle)
+    'volumeup' => $conf['scripts_abs']."/playout_controls.sh -c=volumeup",                 // volume up
+    'volumedown' => $conf['scripts_abs']."/playout_controls.sh -c=volumedown",             // volume down
+    'idletime' => $conf['scripts_abs']."/playout_controls.sh -c=setidletime -v=%s",        // set idletime
+    'shutdownafter' => $conf['scripts_abs']."/playout_controls.sh -c=shutdownafter -v=%s", // set shutdownafter time (sleeptimer)
+    'stopplayoutafter' => $conf['scripts_abs']."/playout_controls.sh -c=playerstopafter -v=%s",// set playerstopafter time (auto stop timer)
+    'playpos' => $conf['scripts_abs']."/playout_controls.sh -c=playerplay -v=%s",          // play from playlist position,
+    'DebugLogClear' => "rm ../logs/debug.log; touch ../logs/debug.log; chmod 777 ../logs/debug.log",
     'scan' => array(
-        'true' => "/usr/bin/sudo ".$conf['scripts_abs']."/playout_controls.sh -c=scan > /dev/null 2>&1 &"   // scan the library
+        'true' => $conf['scripts_abs']."/playout_controls.sh -c=scan > /dev/null 2>&1 &"   // scan the library
     ),
     'stop' => array(
-        'true' => "/usr/bin/sudo ".$conf['scripts_abs']."/playout_controls.sh -c=playerstop"                // stop playing
+        'true' => $conf['scripts_abs']."/playout_controls.sh -c=playerstop"                // stop playing
     ),
     'reboot' => array(
-        'true' => "/usr/bin/sudo ".$conf['scripts_abs']."/playout_controls.sh -c=reboot > /dev/null 2>&1 &" // reboot the jukebox
+        'true' => $conf['scripts_abs']."/playout_controls.sh -c=reboot > /dev/null 2>&1 &" // reboot the jukebox
     ),
     'shutdown' => array(
-        'true' => "/usr/bin/sudo ".$conf['scripts_abs']."/playout_controls.sh -c=shutdown > /dev/null 2>&1 &"// shutdown the jukebox
+        'true' => $conf['scripts_abs']."/playout_controls.sh -c=shutdown > /dev/null 2>&1 &"// shutdown the jukebox
     ),
     'rfidstatus' => array(
-        'turnon' => "/usr/bin/sudo /bin/systemctl start phoniebox-rfid-reader.service",                     // start the rfid service
-        'turnoff' => "/usr/bin/sudo /bin/systemctl stop phoniebox-rfid-reader.service"                      // stop the rfid service
+        'turnon' => "/usr/bin/systemctl start phoniebox-rfid-reader.service",                     // start the rfid service
+        'turnoff' => "/usr/bin/systemctl stop phoniebox-rfid-reader.service"                      // stop the rfid service
     ),
     'gpiostatus' => array(
-        'turnon' => "/usr/bin/sudo /bin/systemctl start phoniebox-gpio-buttons.service",                    // start the gpio button service
-        'turnoff' => "/usr/bin/sudo /bin/systemctl stop phoniebox-gpio-buttons.service"                     // stop the gpio button service
+        'turnon' => "/usr/bin/systemctl start phoniebox-gpio-buttons.service",                    // start the gpio button service
+        'turnoff' => "/usr/bin/systemctl stop phoniebox-gpio-buttons.service"                     // stop the gpio button service
     ),
     // control player through web interface
     'player' => array(
-        "next" => "/usr/bin/sudo " . $conf['scripts_abs'] . "/playout_controls.sh -c=playernext",
-        "prev" => "/usr/bin/sudo " . $conf['scripts_abs'] . "/playout_controls.sh -c=playerprev",
-        "play" => "/usr/bin/sudo " . $conf['scripts_abs'] . "/playout_controls.sh -c=playerplay",
-        "replay" => "/usr/bin/sudo " . $conf['scripts_abs'] . "/playout_controls.sh -c=playerreplay",
-        "pause" => "/usr/bin/sudo " . $conf['scripts_abs'] . "/playout_controls.sh -c=playerpause",
-        "repeat" => "/usr/bin/sudo " . $conf['scripts_abs'] . "/playout_controls.sh -c=playerrepeat -v=playlist",
-        "single" => "/usr/bin/sudo " . $conf['scripts_abs'] . "/playout_controls.sh -c=playerrepeat -v=single",
-        "repeatoff" => "/usr/bin/sudo " . $conf['scripts_abs'] . "/playout_controls.sh -c=playerrepeat -v=off",
-        "seekBack" => "/usr/bin/sudo " . $conf['scripts_abs'] . "/playout_controls.sh -c=playerseek -v=-15",
-        "seekAhead" => "/usr/bin/sudo " . $conf['scripts_abs'] . "/playout_controls.sh -c=playerseek -v=+15",
+        "next" => $conf['scripts_abs'] . "/playout_controls.sh -c=playernext",
+        "prev" => $conf['scripts_abs'] . "/playout_controls.sh -c=playerprev",
+        "play" => $conf['scripts_abs'] . "/playout_controls.sh -c=playerplay",
+        "replay" => $conf['scripts_abs'] . "/playout_controls.sh -c=playerreplay",
+        "pause" => $conf['scripts_abs'] . "/playout_controls.sh -c=playerpause",
+        "repeat" => $conf['scripts_abs'] . "/playout_controls.sh -c=playerrepeat -v=playlist",
+        "single" => $conf['scripts_abs'] . "/playout_controls.sh -c=playerrepeat -v=single",
+        "repeatoff" => $conf['scripts_abs'] . "/playout_controls.sh -c=playerrepeat -v=off",
+        "seekBack" => $conf['scripts_abs'] . "/playout_controls.sh -c=playerseek -v=-15",
+        "seekAhead" => $conf['scripts_abs'] . "/playout_controls.sh -c=playerseek -v=+15",
     ),
 );
 foreach ($urlparams as $paramKey => $paramValue) {
@@ -361,42 +313,42 @@ if(isset($urlparams['enableresume']) && $urlparams['enableresume'] != "" && is_d
 // disable resume
 if(isset($urlparams['disableresume']) && $urlparams['disableresume'] != "" && is_dir($Audio_Folders_Path."/".urldecode($urlparams['disableresume']))) {
     // pass folder to resume script
-    $exec = '/usr/bin/sudo '.$conf['scripts_abs'].'/resume_play.sh -c=disableresume -d="'.$urlparams['disableresume'].'"';
+    $exec = $conf['scripts_abs'].'/resume_play.sh -c=disableresume -d="'.$urlparams['disableresume'].'"';
     execAndRedirect($exec);
 }
 
 // enable shuffle
 if(isset($urlparams['enableshuffle']) && $urlparams['enableshuffle'] != "" && is_dir(urldecode($Audio_Folders_Path."/".$urlparams['enableshuffle']))) {
     // pass folder to resume script
-    $exec = '/usr/bin/sudo '.$conf['scripts_abs'].'/shuffle_play.sh -c=enableshuffle -d="'.$urlparams['enableshuffle'].'"';
+    $exec = $conf['scripts_abs'].'/shuffle_play.sh -c=enableshuffle -d="'.$urlparams['enableshuffle'].'"';
     execAndRedirect($exec);
 }
 
 // disable shuffle
 if(isset($urlparams['disableshuffle']) && $urlparams['disableshuffle'] != "" && is_dir(urldecode($Audio_Folders_Path."/".$urlparams['disableshuffle']))) {
     // pass folder to resume script
-    $exec = '/usr/bin/sudo '.$conf['scripts_abs'].'/shuffle_play.sh -c=disableshuffle -d="'.$urlparams['disableshuffle'].'"';
+    $exec = $conf['scripts_abs'].'/shuffle_play.sh -c=disableshuffle -d="'.$urlparams['disableshuffle'].'"';
     execAndRedirect($exec);
 }
 
 // enable single track play
 if(isset($urlparams['singleenable']) && $urlparams['singleenable'] != "" && is_dir(urldecode($Audio_Folders_Path."/".$urlparams['singleenable']))) {
     // pass folder to single_play script
-    $exec = '/usr/bin/sudo '.$conf['scripts_abs'].'/single_play.sh -c=singleenable -d="'.$urlparams['singleenable'].'"';
+    $exec = $conf['scripts_abs'].'/single_play.sh -c=singleenable -d="'.$urlparams['singleenable'].'"';
     execAndRedirect($exec);
 }
 
 // disable single track play
 if(isset($urlparams['singledisable']) && $urlparams['singledisable'] != "" && is_dir(urldecode($Audio_Folders_Path."/".$urlparams['singledisable']))) {
     // pass folder to single_play script
-    $exec = '/usr/bin/sudo '.$conf['scripts_abs'].'/single_play.sh -c=singledisable -d="'.$urlparams['singledisable'].'"';
+    $exec = $conf['scripts_abs'].'/single_play.sh -c=singledisable -d="'.$urlparams['singledisable'].'"';
     execAndRedirect($exec);
 }
 
 // play folder audio files
 if(isset($urlparams['play']) && $urlparams['play'] != "" && is_dir(urldecode($Audio_Folders_Path."/".$urlparams['play']))) {
     // pass folder to playout script
-    $exec = '/usr/bin/sudo '.$conf['scripts_abs'].'/rfid_trigger_play.sh -d="'.$urlparams['play'].'"';
+    $exec = $conf['scripts_abs'].'/rfid_trigger_play.sh -d="'.$urlparams['play'].'"';
     if($urlparams['recursive'] == "true") {
         $exec .= ' -v="recursive"';
     }

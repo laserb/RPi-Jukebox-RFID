@@ -11,7 +11,7 @@ Stop Playout Timer Set Form
         /*
         * Get sleeptimer value
         */
-        $stoptimervalue = exec("sudo atq -q s | awk '{print $5}'");
+        $stoptimervalue = exec("atq -q s | awk '{print $5}'");
         if ($stoptimervalue != "") {
             $unixtime = time();
             /*

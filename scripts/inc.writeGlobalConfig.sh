@@ -31,8 +31,7 @@ if [ "${DEBUG_inc_writeGlobalConfig_sh}" == "TRUE" ]; then echo "########### SCR
 if [ ! -f $PATHDATA/../settings/rfid_trigger_play.conf ]; then
     cp $PATHDATA/../settings/rfid_trigger_play.conf.sample $PATHDATA/../settings/rfid_trigger_play.conf
     # change the read/write so that later this might also be editable through the web app
-    sudo chown -R pi:www-data $PATHDATA/../settings/rfid_trigger_play.conf
-    sudo chmod -R 775 $PATHDATA/../settings/rfid_trigger_play.conf
+    chmod -R 775 $PATHDATA/../settings/rfid_trigger_play.conf
 fi
 
 # Path to folder containing audio / streams
@@ -201,5 +200,4 @@ echo "LANG=\"${LANG}\"" >> "${PATHDATA}/../settings/global.conf"
 echo "VERSION=\"${VERSION}\"" >> "${PATHDATA}/../settings/global.conf"
 
 # change the read/write so that later this might also be editable through the web app
-sudo chown -R pi:www-data ${PATHDATA}/../settings/global.conf
-sudo chmod -R 775 ${PATHDATA}/../settings/global.conf
+chmod -R 775 ${PATHDATA}/../settings/global.conf

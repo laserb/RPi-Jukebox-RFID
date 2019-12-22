@@ -17,7 +17,7 @@ function execScriptWithoutCheck($command) {
         file_put_contents("../../../logs/debug.log", "\n  # function execScriptWithoutCheck: " . $command , FILE_APPEND | LOCK_EX);
     }
     $absoluteCommand = realpath(dirname(__FILE__) .'/../../scripts') ."/{$command}";
-    exec("sudo ".$absoluteCommand);
+    exec($absoluteCommand);
 }
 
 function execSuccessfully($command) {    
@@ -26,7 +26,7 @@ function execSuccessfully($command) {
         file_put_contents("../../logs/debug.log", "\n  # function execSuccessfully: " . $command , FILE_APPEND | LOCK_EX);
     }
 
-    exec("sudo ".$command, $output, $rc);
+    exec($command, $output, $rc);
     if ($rc != 0) {
         $formattedOutput = implode('\n', $output);
         echo "Execution failed\nCommand: {$command}\nOutput: {$formattedOutput}\nRC: .${rc}";

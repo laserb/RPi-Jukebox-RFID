@@ -43,8 +43,7 @@ if [ "${DEBUG_rfid_trigger_play_sh}" == "TRUE" ]; then echo "########### SCRIPT 
 if [ ! -f $PATHDATA/../settings/rfid_trigger_play.conf ]; then
     cp $PATHDATA/../settings/rfid_trigger_play.conf.sample $PATHDATA/../settings/rfid_trigger_play.conf
     # change the read/write so that later this might also be editable through the web app
-    sudo chown -R pi:www-data $PATHDATA/../settings/rfid_trigger_play.conf
-    sudo chmod -R 775 $PATHDATA/../settings/rfid_trigger_play.conf
+    chmod -R 775 $PATHDATA/../settings/rfid_trigger_play.conf
 fi
 
 ###########################################################
@@ -166,12 +165,10 @@ if [ "$CARDID" ]; then
             ;;
         $CMDSHUTDOWN)
             # shutdown the RPi nicely
-            # sudo halt
             $PATHDATA/playout_controls.sh -c=shutdown
             ;;
         $CMDREBOOT)
             # shutdown the RPi nicely
-            # sudo reboot
             $PATHDATA/playout_controls.sh -c=reboot
             ;;
         $CMDNEXT)
@@ -181,12 +178,11 @@ if [ "$CARDID" ]; then
         $CMDPREV)
             # play previous track in playlist
             # echo "prev" | nc.openbsd -w 1 localhost 4212
-            sudo $PATHDATA/playout_controls.sh -c=playerprev
-            #/usr/bin/sudo /home/pi/RPi-Jukebox-RFID/scripts/playout_controls.sh -c=playerprev
+            $PATHDATA/playout_controls.sh -c=playerprev
             ;;
         $CMDREWIND)
             # play the first track in playlist
-            sudo $PATHDATA/playout_controls.sh -c=playerrewind
+            $PATHDATA/playout_controls.sh -c=playerrewind
             ;;
         $CMDSEEKFORW)
             # jump 15 seconds ahead
@@ -393,10 +389,10 @@ if [ ! -z "$FOLDER" -a ! -z ${FOLDER+x} -a -d "${AUDIOFOLDERSPATH}/${FOLDER}" ];
             if [ $STATE == "play" ]
             then
                 if [ "${DEBUG_rfid_trigger_play_sh}" == "TRUE" ]; then echo "  MPD playing, pausing the player" >> $PATHDATA/../logs/debug.log; fi
-                sudo $PATHDATA/playout_controls.sh -c=playerpause &>/dev/null
+                $PATHDATA/playout_controls.sh -c=playerpause &>/dev/null
             else
                 if [ "${DEBUG_rfid_trigger_play_sh}" == "TRUE" ]; then echo "MPD not playing, start playing" >> $PATHDATA/../logs/debug.log; fi
-                sudo $PATHDATA/playout_controls.sh -c=playerplay &>/dev/null
+                $PATHDATA/playout_controls.sh -c=playerplay &>/dev/null
             fi
             if [ "${DEBUG_rfid_trigger_play_sh}" == "TRUE" ]; then echo "  Completed: toggle pause/play" >> $PATHDATA/../logs/debug.log; fi
         elif [ "$SECONDSWIPE" == "NOAUDIOPLAY" ]
@@ -452,8 +448,8 @@ if [ ! -z "$FOLDER" -a ! -z ${FOLDER+x} -a -d "${AUDIOFOLDERSPATH}/${FOLDER}" ];
         $PATHDATA/playout_controls.sh -c=playlistaddplay -v="${PLAYLISTNAME}" -d="${FOLDER}"
         if [ "${DEBUG_rfid_trigger_play_sh}" == "TRUE" ]; then echo "  Command: $PATHDATA/playout_controls.sh -c=playlistaddplay -v=\"${PLAYLISTNAME}\" -d=\"${FOLDER}\"" >> $PATHDATA/../logs/debug.log; fi
         # save latest playlist not to file
-        sudo echo ${PLAYLISTNAME} > $PATHDATA/../settings/Latest_Playlist_Played
-        sudo chmod 777 $PATHDATA/../settings/Latest_Playlist_Played
+        echo ${PLAYLISTNAME} > $PATHDATA/../settings/Latest_Playlist_Played
+        chmod 777 $PATHDATA/../settings/Latest_Playlist_Played
     fi
     if [ "$PLAYPLAYLIST" == "skipnext" ]
     then
