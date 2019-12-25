@@ -316,14 +316,6 @@ function index_folders_print($item, $key)
 
     print "
             <h4>";
-/*
-	$conf['settings_abs'] = realpath(getcwd().'/../settings/');
-	$ShowCover = trim(file_get_contents($conf['settings_abs'].'/ShowCover'));
-	if ($ShowCover == "ON" && file_exists($contentTree[$key]['path_abs'].'/cover.jpg')) {
-	$cover = $contentTree[$key]['path_abs']."/cover.jpg";
-	print  "<img class='img-responsive img-thumbnail' src='data:image/jpg;base64,".base64_encode(file_get_contents("$cover"))."' alt='' style='float: right; max-width: 85px'/>";
-	}
-*/
     if($contentTree[$key]['count_files'] > 0) {
         print "
               <a onclick='playPlaylist(\"$playlist\", \"false\");' class='btn-panel-big btn-panel-col' title='Play folder' style='cursor: pointer'><i class='mdi mdi-play-circle-outline'></i></a>";

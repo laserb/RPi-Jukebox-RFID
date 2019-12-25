@@ -20,11 +20,12 @@ NOW=`date +%Y-%m-%d.%H:%M:%S`
 # The absolute path to the folder whjch contains all the scripts.
 # Unless you are working with symlinks, leave the following line untouched.
 PATHDATA="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+. $PATHDATA/inc.config.sh
 
 #############################################################
 # $DEBUG TRUE|FALSE
 # Read debug logging configuration file
-. $PATHDATA/../settings/debugLogging.conf
+. $SETTINGS_PATH/debugLogging.conf
 
 # Read the args passed on by the command line
 # see following file for details:
@@ -33,10 +34,10 @@ PATHDATA="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 ###########################################################
 # Read global configuration file (and create is not exists)
 # create the global configuration file from single files - if it does not exist
-if [ ! -f $PATHDATA/../settings/global.conf ]; then
+if [ ! -f $SETTINGS_PATH/global.conf ]; then
     . inc.writeGlobalConfig.sh
 fi
-. $PATHDATA/../settings/global.conf
+. $SETTINGS_PATH/global.conf
 ###########################################################
 
 if [ "${DEBUG_resume_play_sh}" == "TRUE" ]; then echo "#START##### SCRIPT resume_play.sh ($NOW) ##" >> $PATHDATA/../logs/debug.log; fi
@@ -67,7 +68,7 @@ case "$COMMAND" in
 
 savepos)
     # Get folder name of currently played audio
-    FOLDER=$(cat $PATHDATA/../settings/Latest_Folder_Played)
+    FOLDER=$(cat $SETTINGS_PATH/Latest_Folder_Played)
     # Read the current config file (include will execute == read)
     . "$AUDIOFOLDERSPATH/$FOLDER/folder.conf"
     if [ "${DEBUG_resume_play_sh}" == "TRUE" ]; then echo "VAR FOLDER from settings/Latest_Folder_Played: $FOLDER" >> $PATHDATA/../logs/debug.log; fi

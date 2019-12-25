@@ -5,7 +5,7 @@ namespace JukeBox\Api;
 * debug? Conf file line:
 * DEBUG_WebApp_API="TRUE"
 */
-$debugLoggingConf = parse_ini_file("../../settings/debugLogging.conf");
+$debugLoggingConf = parse_ini_file($conf['settings_path']."/debugLogging.conf");
 if($debugLoggingConf['DEBUG_WebApp_API'] == "TRUE") {
     file_put_contents("../../logs/debug.log", "\n# WebApp API # " . __FILE__ , FILE_APPEND | LOCK_EX);
     file_put_contents("../../logs/debug.log", "\n  # \$_SERVER['REQUEST_METHOD']: " . $_SERVER['REQUEST_METHOD'] , FILE_APPEND | LOCK_EX);
@@ -15,10 +15,10 @@ if($debugLoggingConf['DEBUG_WebApp_API'] == "TRUE") {
  * Returns the cover of the currently played folder.
  */
 
-$Audio_Folders_Path = trim(file_get_contents('../../settings/Audio_Folders_Path'));
-$Latest_Folder_Played = trim(file_get_contents('../../settings/Latest_Folder_Played'));
+$Audio_Folders_Path = trim(file_get_contents($conf['settings_path'].'/Audio_Folders_Path'));
+$Latest_Folder_Played = trim(file_get_contents($conf['settings_path'].'/Latest_Folder_Played'));
 
-$spover = $Audio_Folders_Path."/../../settings/cover.jpg";
+$spover = $conf['settings_path']."/cover.jpg";
 $ocover = $Audio_Folders_Path."/".$Latest_Folder_Played."/cover.jpg";
 $nocover = "../_assets/img/No_Cover.jpg";
 

@@ -16,9 +16,9 @@ if(
                 $debugLoggingConf .= $debugItem."=\"FALSE\"\n";
             }
         }
-        file_put_contents("../settings/debugLogging.conf", $debugLoggingConf);
+        file_put_contents($conf['settings_path']."/debugLogging.conf", $debugLoggingConf);
         // read file
-        $debugLoggingConf = parse_ini_file("../settings/debugLogging.conf");
+        $debugLoggingConf = parse_ini_file($conf['settings_path']."/debugLogging.conf");
         if($debug == "true") {
             print "<pre>".$debugLoggingConf."</pre>";
         }

@@ -5,7 +5,7 @@ $debug = "false"; // true or false
 include("config.php");
 include("func.php");
 // path to settings folder from github repo on RPi
-$conf['settings_abs'] = realpath(getcwd().'/../settings/');
+$conf['settings_abs'] = $conf['base_path'].'/settings/';
 $Audio_Folders_Path = realpath(trim(file_get_contents($conf['settings_abs'].'/Audio_Folders_Path')));
 //print $_GET['rss'];
 

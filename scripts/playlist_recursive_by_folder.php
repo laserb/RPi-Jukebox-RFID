@@ -12,12 +12,13 @@
 * ./rfid_trigger_play.sh -d="ZZZ-SubMaster/fff-threeSubs" -v=recursive
 * ./rfid_trigger_play.sh -d="ZZZ SubMaster Whitespaces" -v=recursive
 */
+include(dirname(__FILE__).'/../htdocs/config.php');
 
 /*
 * debug? Conf file line:
 * DEBUG_playlist_recursive_by_folder_php="TRUE"
 echo getcwd();
-$debugLoggingConf = parse_ini_file(getcwd()."/../settings/debugLogging.conf");
+$debugLoggingConf = parse_ini_file($conf['settings_path']."/debugLogging.conf");
 if($debugLoggingConf['DEBUG_playlist_recursive_by_folder_php'] == "TRUE") {
     file_put_contents(getcwd()."../logs/debug.log", "\n# DEBUG_playlist_recursive_by_folder_php # " . __FILE__ , FILE_APPEND | LOCK_EX);
     file_put_contents(getcwd()."/../logs/debug.log", "\n  # \$_SERVER['REQUEST_METHOD']: " . $_SERVER['REQUEST_METHOD'] , FILE_APPEND | LOCK_EX);
@@ -31,13 +32,13 @@ $debug = "false";
 include(dirname(__FILE__).'/../htdocs/func.php');
 
 // path to audiofolder
-$Audio_Folders_Path = trim(file_get_contents(dirname(__FILE__).'/../settings/Audio_Folders_Path'));
-if(file_exists(dirname(__FILE__).'/../settings/edition')) {
-    $edition = trim(file_get_contents(dirname(__FILE__).'/../settings/edition'));
+$Audio_Folders_Path = trim(file_get_contents($conf['settings_path'].'/Audio_Folders_Path'));
+if(file_exists($conf['settings_path'].'/edition')) {
+    $edition = trim(file_get_contents($conf['settings_path'].'/edition'));
 } else {
     $edition = "classic";
 }
-$version = trim(file_get_contents(dirname(__FILE__).'/../settings/version'));
+$version = trim(file_get_contents($conf['settings_path'].'/version'));
 
 /*
 * Get vars passed on from command line

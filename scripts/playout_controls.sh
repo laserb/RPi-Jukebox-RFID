@@ -55,29 +55,30 @@ NOW=`date +%Y-%m-%d.%H:%M:%S`
 # recordplaylatest
 
 # SET VARIABLES
-# The variables can be changed in the ../settings dir.
+# The variables can be changed in the settings dir.
 # Relevant files are:
-# * ../settings/Audio_Volume_Change_Step
-# * ../settings/Audio_iFace_Name
+# * settings/Audio_Volume_Change_Step
+# * settings/Audio_iFace_Name
 
 # The absolute path to the folder whjch contains all the scripts.
 # Unless you are working with symlinks, leave the following line untouched.
 PATHDATA="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+. $PATHDATA/inc.config.sh
 
 #############################################################
 # $DEBUG TRUE|FALSE
 # Read debug logging configuration file
-. $PATHDATA/../settings/debugLogging.conf
+. $SETTINGS_PATH/debugLogging.conf
 
 if [ "${DEBUG_playout_controls_sh}" == "TRUE" ]; then echo "########### SCRIPT playout_controls.sh ($NOW) ##" >> $PATHDATA/../logs/debug.log; fi
 
 ###########################################################
 # Read global configuration file (and create is not exists)
 # create the global configuration file from single files - if it does not exist
-if [ ! -f $PATHDATA/../settings/global.conf ]; then
+if [ ! -f $SETTINGS_PATH/global.conf ]; then
     . $PATHDATA/inc.writeGlobalConfig.sh
 fi
-. $PATHDATA/../settings/global.conf
+. $SETTINGS_PATH/global.conf
 # contains:
 # AUDIOFOLDERSPATH
 # PLAYLISTSFOLDERPATH
@@ -98,7 +99,7 @@ fi
 # path to file storing the current volume level
 # this file does not need to exist
 # it will be created or deleted by this script
-VOLFILE=$PATHDATA/../settings/Audio_Volume_Level
+VOLFILE=$SETTINGS_PATH/Audio_Volume_Level
 
 #############################################################
 
@@ -278,7 +279,7 @@ case $COMMAND in
             echo -e setvol $VALUE | nc -w 1 localhost 6600
         fi
         # write new value to file
-        echo "$VALUE" > $PATHDATA/../settings/Max_Volume_Limit
+        echo "$VALUE" > $SETTINGS_PATH/Max_Volume_Limit
         # create global config file because individual setting got changed
         . $PATHDATA/inc.writeGlobalConfig.sh
         ;;
@@ -287,7 +288,7 @@ case $COMMAND in
         ;;
     setvolstep)
         # write new value to file
-        echo "$VALUE" > $PATHDATA/../settings/Audio_Volume_Change_Step
+        echo "$VALUE" > $SETTINGS_PATH/Audio_Volume_Change_Step
         # create global config file because individual setting got changed
         . $PATHDATA/inc.writeGlobalConfig.sh
         ;;
@@ -420,9 +421,9 @@ case $COMMAND in
         if [ "${DEBUG_playout_controls_sh}" == "TRUE" ]; then echo "mpc load "${VALUE//\//SLASH}" && $PATHDATA/resume_play.sh -c=resume -d="${FOLDER}"" >> $PATHDATA/../logs/debug.log; fi
 
         # write latest folder played to settings file
-        echo ${FOLDER} > $PATHDATA/../settings/Latest_Folder_Played
-        chmod 777 $PATHDATA/../settings/Latest_Folder_Played
-        if [ "${DEBUG_playout_controls_sh}" == "TRUE" ]; then echo "  echo ${FOLDER} > $PATHDATA/../settings/Latest_Folder_Played" >> $PATHDATA/../logs/debug.log; fi
+        echo ${FOLDER} > $SETTINGS_PATH/Latest_Folder_Played
+        chmod 777 $SETTINGS_PATH/Latest_Folder_Played
+        if [ "${DEBUG_playout_controls_sh}" == "TRUE" ]; then echo "  echo ${FOLDER} > $SETTINGS_PATH/Latest_Folder_Played" >> $PATHDATA/../logs/debug.log; fi
         if [ "${DEBUG_playout_controls_sh}" == "TRUE" ]; then echo "  VAR Latest_Folder_Played: ${FOLDER}" >> $PATHDATA/../logs/debug.log; fi
         if [ "${DEBUG_playout_controls_sh}" == "TRUE" ]; then echo "  # end playout_controls.sh playlistaddplay" >> $PATHDATA/../logs/debug.log; fi
 
@@ -442,7 +443,7 @@ case $COMMAND in
         ;;
     setidletime)
         # write new value to file
-        echo "$VALUE" > $PATHDATA/../settings/Idle_Time_Before_Shutdown
+        echo "$VALUE" > $SETTINGS_PATH/Idle_Time_Before_Shutdown
         # create global config file because individual setting got changed
         . $PATHDATA/inc.writeGlobalConfig.sh
         # restart service to apply the new value

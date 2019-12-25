@@ -14,18 +14,19 @@ NOW=`date +%Y-%m-%d.%H:%M:%S`
 # The absolute path to the folder whjch contains all the scripts.
 # Unless you are working with symlinks, leave the following line untouched.
 PATHDATA="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+. $PATHDATA/inc.config.sh
 
 #############################################################
 # $DEBUG TRUE|FALSE
 # Read debug logging configuration file
-. $PATHDATA/../settings/debugLogging.conf
+. $SETTINGS_PATH/debugLogging.conf
 
 # Read the args passed on by the command line
 # see following file for details:
 . $PATHDATA/inc.readArgsFromCommandLine.sh
 
 # path to audio folders
-AUDIOFOLDERSPATH=`cat $PATHDATA/../settings/Audio_Folders_Path`
+AUDIOFOLDERSPATH=`cat $SETTINGS_PATH/Audio_Folders_Path`
 
 if [ "${DEBUG_shuffle_play_sh}" == "TRUE" ]; then echo "## SCRIPT shuffle_play.sh ($NOW) ##" >> $PATHDATA/../logs/debug.log; fi
 if [ "${DEBUG_shuffle_play_sh}" == "TRUE" ]; then echo "VAR AUDIOFOLDERSPATH: $AUDIOFOLDERSPATH" >> $PATHDATA/../logs/debug.log; fi
@@ -42,7 +43,7 @@ if [ -z "$FOLDER" ]
 then
     # this is old: FOLDER=$(mpc lsplaylists)
     # actually, this should be the latest folder:
-    FOLDER=$(cat $PATHDATA/../settings/Latest_Folder_Played)
+    FOLDER=$(cat $SETTINGS_PATH/Latest_Folder_Played)
 fi
 
 # Some error checking: if folder.conf does not exist, create default

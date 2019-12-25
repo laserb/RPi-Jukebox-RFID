@@ -28,16 +28,16 @@ $debugAvail = array(
 );
 $debugOptions = array("TRUE", "FALSE");
 
-if(!file_exists("../settings/debugLogging.conf")) {
+if(!file_exists($conf['settings_path']."/debugLogging.conf")) {
     // create file
     $debugLoggingConf = "";
     foreach($debugAvail as $debugItem) {
         $debugLoggingConf .= $debugItem."=\"FALSE\"\n";
     }
-    file_put_contents("../settings/debugLogging.conf", $debugLoggingConf);
+    file_put_contents($conf['settings_path']."/debugLogging.conf", $debugLoggingConf);
 }
 // read file
-$debugLoggingConf = parse_ini_file("../settings/debugLogging.conf");
+$debugLoggingConf = parse_ini_file($conf['settings_path']."/debugLogging.conf");
 /*
 * DEBUGGING
 * for debugging, set following var to true.
@@ -89,21 +89,19 @@ include("func.php");
 $conf['scripts_abs'] = realpath(getcwd().'/../scripts/');
 // path to shared folder from github repo on RPi
 $conf['shared_abs'] = realpath(getcwd().'/../shared/');
-// path to settings folder from github repo on RPi
-$conf['settings_abs'] = realpath(getcwd().'/../settings/');
 
 /*
 * Vars from the settings folder
 */
-if(!file_exists($conf['settings_abs']."/global.conf")) {
+if(!file_exists($conf['settings_path']."/global.conf")) {
     // execute shell to create config file
     // scripts/inc.writeGlobalConfig.sh
     exec($conf['scripts_abs']."/inc.writeGlobalConfig.sh");
-    exec("chmod 777 ".$conf['settings_abs']."/global.conf");
+    exec("chmod 777 ".$conf['settings_path']."/global.conf");
 }
 
 // read the global conf file
-$globalConf = parse_ini_file($conf['settings_abs']."/global.conf", $process_sections = null);
+$globalConf = parse_ini_file($conf['settings_path']."/global.conf", $process_sections = null);
 //print "<pre>"; print_r($globalConf); print "</pre>"; //???
 
 // assign the values from the global conf file to the vars in PHP
@@ -116,23 +114,12 @@ $maxvolumevalue = $globalConf['AUDIOVOLMAXLIMIT'];
 $conf['settings_lang'] = $globalConf['LANG'];
 
 // vars that must be read continuously and can't be in the global conf file
-$Latest_Folder_Played = trim(file_get_contents($conf['settings_abs'].'/Latest_Folder_Played'));
+$Latest_Folder_Played = trim(file_get_contents($conf['settings_path'].'/Latest_Folder_Played'));
 
 /*
 * load language strings
 */
 include("inc.langLoad.php");
-//<<<<<<< HEAD
-/*=======
-$Second_Swipe = trim(file_get_contents($conf['settings_abs'].'/Second_Swipe'));
-$ShowCover = fileGetContentOrDefault($conf['settings_abs'].'/ShowCover', "ON");
-$version = trim(file_get_contents($conf['settings_abs'].'/version'));
-$edition = fileGetContentOrDefault(dirname(__FILE__).'/../settings/edition', "classic");
-/*
-* load language strings
-*/
-//$conf['settings_lang'] = fileGetContentOrDefault($conf['settings_abs'].'/Lang', "en-UK");
-//>>>>>>> 7ef4a568abfc0e0c97cd0ffd954fa3e5ce54b240
 
 /*******************************************
 * URLPARAMETERS

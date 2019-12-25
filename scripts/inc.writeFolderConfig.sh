@@ -41,11 +41,12 @@ NOW=`date +%Y-%m-%d.%H:%M:%S`
 # The absolute path to the folder whjch contains all the scripts.
 # Unless you are working with symlinks, leave the following line untouched.
 PATHDATA="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+. $PATHDATA/inc.config.sh
 
 #############################################################
 # $DEBUG TRUE|FALSE
 # Read debug logging configuration file
-. $PATHDATA/../settings/debugLogging.conf
+. $SETTINGS_PATH/debugLogging.conf
 
 # Get args from command line. Needed for "create default folder.conf" file
 # see following file for details:
@@ -57,7 +58,7 @@ PATHDATA="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # If this would be preferred by you, the users, please file a ticket to discuss it.
 
 # path to audio folders
-AUDIOFOLDERSPATH=`cat $PATHDATA/../settings/Audio_Folders_Path`
+AUDIOFOLDERSPATH=`cat $SETTINGS_PATH/Audio_Folders_Path`
 
 # some debug info
 if [ "${DEBUG_inc_writeFolderConfig_sh}" == "TRUE" ]; then echo "########### SCRIPT inc.writeFolderConfig.sh ($NOW) ##" >> $PATHDATA/../logs/debug.log; fi

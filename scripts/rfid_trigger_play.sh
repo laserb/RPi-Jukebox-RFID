@@ -31,32 +31,33 @@ NOW=`date +%Y-%m-%d.%H:%M:%S`
 # The absolute path to the folder whjch contains all the scripts.
 # Unless you are working with symlinks, leave the following line untouched.
 PATHDATA="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+. $PATHDATA/inc.config.sh
 
 #############################################################
 # $DEBUG TRUE|FALSE
 # Read debug logging configuration file
-. $PATHDATA/../settings/debugLogging.conf
+. $SETTINGS_PATH/debugLogging.conf
 
 if [ "${DEBUG_rfid_trigger_play_sh}" == "TRUE" ]; then echo "########### SCRIPT rfid_trigger_play.sh ($NOW) ##" >> $PATHDATA/../logs/debug.log; fi
 
 # create the configuration file from sample - if it does not exist
-if [ ! -f $PATHDATA/../settings/rfid_trigger_play.conf ]; then
-    cp $PATHDATA/../settings/rfid_trigger_play.conf.sample $PATHDATA/../settings/rfid_trigger_play.conf
+if [ ! -f $SETTINGS_PATH/rfid_trigger_play.conf ]; then
+    cp $SETTINGS_PATH/rfid_trigger_play.conf.sample $SETTINGS_PATH/rfid_trigger_play.conf
     # change the read/write so that later this might also be editable through the web app
-    chmod -R 775 $PATHDATA/../settings/rfid_trigger_play.conf
+    chmod -R 775 $SETTINGS_PATH/rfid_trigger_play.conf
 fi
 
 ###########################################################
 # Read global configuration file (and create is not exists)
 # create the global configuration file from single files - if it does not exist
-if [ ! -f $PATHDATA/../settings/global.conf ]; then
+if [ ! -f $SETTINGS_PATH/global.conf ]; then
     . inc.writeGlobalConfig.sh
 fi
-. $PATHDATA/../settings/global.conf
+. $SETTINGS_PATH/global.conf
 ###########################################################
 
 # Read configuration file
-. $PATHDATA/../settings/rfid_trigger_play.conf
+. $SETTINGS_PATH/rfid_trigger_play.conf
 
 # Get args from command line (see Usage above)
 # see following file for details:
@@ -72,7 +73,7 @@ if [ "$CARDID" ]; then
 
     # Add info into the log, making it easer to monitor cards
     echo "Card ID '$CARDID' was used at '$NOW'." > $PATHDATA/../shared/latestID.txt
-    echo "$CARDID" > $PATHDATA/../settings/Latest_RFID
+    echo "$CARDID" > $SETTINGS_PATH/Latest_RFID
     if [ "${DEBUG_rfid_trigger_play_sh}" == "TRUE" ]; then echo "Card ID '$CARDID' was used" >> $PATHDATA/../logs/debug.log; fi
 
     # If the input is of 'special' use, don't treat it like a trigger to play audio.
@@ -329,9 +330,8 @@ if [ ! -z "$FOLDER" -a ! -z ${FOLDER+x} -a -d "${AUDIOFOLDERSPATH}/${FOLDER}" ];
 
     # get the name of the last folder played. As mpd doesn't store the name of the last
     # playlist, we have to keep track of it via the Latest_Folder_Played file
-    LASTFOLDER=$(cat $PATHDATA/../settings/Latest_Folder_Played)
-    LASTPLAYLIST=$(cat $PATHDATA/../settings/Latest_Playlist_Played)
-    # this might need to go? resume not working... echo ${FOLDER} > $PATHDATA/../settings/Latest_Folder_Played
+    LASTFOLDER=$(cat $SETTINGS_PATH/Latest_Folder_Played)
+    LASTPLAYLIST=$(cat $SETTINGS_PATH/Latest_Playlist_Played)
     if [ "${DEBUG_rfid_trigger_play_sh}" == "TRUE" ]; then echo "  Var \$LASTFOLDER: $LASTFOLDER" >> $PATHDATA/../logs/debug.log; fi
     if [ "${DEBUG_rfid_trigger_play_sh}" == "TRUE" ]; then echo "  Var \$LASTPLAYLIST: $LASTPLAYLIST" >> $PATHDATA/../logs/debug.log; fi
     if [ "${DEBUG_rfid_trigger_play_sh}" == "TRUE" ]; then echo "Checking 'recursive' list? VAR \$VALUE: $VALUE" >> $PATHDATA/../logs/debug.log; fi
@@ -445,11 +445,10 @@ if [ ! -z "$FOLDER" -a ! -z ${FOLDER+x} -a -d "${AUDIOFOLDERSPATH}/${FOLDER}" ];
         # the variable passed on to play is the playlist name -v (NOT the folder name)
         # because (see above) a folder can be played recursively (including subfolders) or flat (only containing files)
         # load new playlist and play
+        # save latest playlist not to file
+        echo ${PLAYLISTNAME} > $SETTINGS_PATH/Latest_Playlist_Played
         $PATHDATA/playout_controls.sh -c=playlistaddplay -v="${PLAYLISTNAME}" -d="${FOLDER}"
         if [ "${DEBUG_rfid_trigger_play_sh}" == "TRUE" ]; then echo "  Command: $PATHDATA/playout_controls.sh -c=playlistaddplay -v=\"${PLAYLISTNAME}\" -d=\"${FOLDER}\"" >> $PATHDATA/../logs/debug.log; fi
-        # save latest playlist not to file
-        echo ${PLAYLISTNAME} > $PATHDATA/../settings/Latest_Playlist_Played
-        chmod 777 $PATHDATA/../settings/Latest_Playlist_Played
     fi
     if [ "$PLAYPLAYLIST" == "skipnext" ]
     then

@@ -54,7 +54,7 @@ print '<a id="pause" onclick="pause();" class="btn btn-player-xl" title="' . $la
        <div class="btn-group controlVolumeUpDown" role="group"
         aria-label="volume" style="margin-bottom: 0.5em;">
 <?php
-        $muted = file_exists('../settings/Audio_Volume_Level');
+        $muted = file_exists($conf['settings_path'].'/Audio_Volume_Level');
         print '<a id="muted" onclick="unMute();" class="btn  btn-lg" title="' . $lang['playerMute'] . '" style="display:' . ($muted ? 'initial' : 'none') . '"><i class="mdi mdi-volume-off"></i></a>';
         print '<a id="unmuted" onclick="mute();" class="btn  btn-lg" title="' . $lang['playerMute'] . '" style="display:' . (! $muted ? 'initial' : 'none') . '"><i class="mdi mdi-volume-high"></i></a>';
 ?>

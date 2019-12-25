@@ -11,7 +11,7 @@ include 'common.php';
 * debug? Conf file line:
 * DEBUG_WebApp_API="TRUE"
 */
-$debugLoggingConf = parse_ini_file("../../settings/debugLogging.conf");
+$debugLoggingConf = parse_ini_file($conf['settings_path']."/debugLogging.conf");
 
 if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     if($debugLoggingConf['DEBUG_WebApp_API'] == "TRUE") {

@@ -22,13 +22,13 @@ switch($post['streamType']) {
     default:
         $filestream = "url.txt";
 }
-$filestream = $conf['shared_abs']."/audiofolders/".$post['streamFolderName']."/".$filestream;
+$filestream = $conf['audiofolders_path'].'/'.$post['streamFolderName']."/".$filestream;
 // write $post['streamURL'] to $filestream
 $exec = "echo '".$post['streamURL']."' > '".$filestream."'";
 exec($exec);
 //print "<p>".$exec."</p>";//???
 // make this file accessible by user pi as well as webserver
-$exec = "chmod -R 777 '".$conf['shared_abs']."/audiofolders/".$post['streamFolderName']."'";
+$exec = "chmod -R 777 '".$conf['audiofolders_path']."/".$post['streamFolderName']."'";
 exec($exec);
 //print "<p>".$exec."</p>";//???
 // write $post['streamFolderName'] to cardID file in shortcuts

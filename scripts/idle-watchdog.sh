@@ -8,14 +8,15 @@ for i in `atq | awk '{print $1}'`;do atrm $i;done
 sleep 60
 
 PATHDATA="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+. $PATHDATA/inc.config.sh
 
 # Idle time after the RPi will be shut down. 0=turn off feature.
 # 1. create a default if file does not exist
-if [ ! -f $PATHDATA/../settings/Idle_Time_Before_Shutdown ]; then
-    echo "0" > $PATHDATA/../settings/Idle_Time_Before_Shutdown
+if [ ! -f $SETTINGS_PATH/Idle_Time_Before_Shutdown ]; then
+    echo "0" > $SETTINGS_PATH/Idle_Time_Before_Shutdown
 fi
 # 2. then|or read value from file
-IDLETIME=`cat $PATHDATA/../settings/Idle_Time_Before_Shutdown`
+IDLETIME=`cat $SETTINGS_PATH/Idle_Time_Before_Shutdown`
 
 #Go into infinite loop if idle time is greater 0
 while [ $IDLETIME -gt 0 ]

@@ -1,7 +1,7 @@
 <?php
 include("config.php");
-$Audio_Folders_Path = trim(file_get_contents('../settings/Audio_Folders_Path'));
-$Latest_Folder_Played = trim(file_get_contents('../settings/Latest_Folder_Played'));
+$Audio_Folders_Path = trim(file_get_contents($conf['settings_path'].'/Audio_Folders_Path'));
+$Latest_Folder_Played = trim(file_get_contents($conf['settings_path'].'/Latest_Folder_Played'));
 $latestID = file_get_contents($conf['base_path'].'/shared/latestID.txt', true);
 $onlyID = substr($latestID, 9, 10);
 $temp = explode("'", "$latestID");
