@@ -1,5 +1,6 @@
 <?php
 namespace JukeBox\Api;
+include '../config.php';
 
 /*
 * debug? Conf file line:

@@ -1,6 +1,12 @@
 <?php
 namespace JukeBox\Api;
 
+/***
+ * Starts to play a playlist for a put request.
+ * Retrieves information about a playlist for a GET request.
+ */
+include 'common.php';
+
 /*
 * debug? Conf file line:
 * DEBUG_WebApp_API="TRUE"
@@ -11,11 +17,6 @@ if($debugLoggingConf['DEBUG_WebApp_API'] == "TRUE") {
     file_put_contents("../../logs/debug.log", "\n  # \$_SERVER['REQUEST_METHOD']: " . $_SERVER['REQUEST_METHOD'] , FILE_APPEND | LOCK_EX);
 }
 
-/***
- * Starts to play a playlist for a put request.
- * Retrieves information about a playlist for a GET request.
- */
-include 'common.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     handleGet();

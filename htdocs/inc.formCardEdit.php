@@ -23,7 +23,7 @@ if($fdata['streamURL_ajax'] == "true") {
 }
 
 // read the shortcuts available
-$shortcutstemp = array_filter(glob($conf['base_path'].'/shared/shortcuts/*'), 'is_file');
+$shortcutstemp = array_filter(glob($conf['shortcuts_path'].'/*'), 'is_file');
 $shortcuts = array(); // the array with pairs of ID => foldername
 // read files' content into array
 foreach ($shortcutstemp as $shortcuttemp) {

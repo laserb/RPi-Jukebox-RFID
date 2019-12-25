@@ -72,7 +72,7 @@ if [ "$CARDID" ]; then
     # echo CARDID = $CARDID
 
     # Add info into the log, making it easer to monitor cards
-    echo "Card ID '$CARDID' was used at '$NOW'." > $PATHDATA/../shared/latestID.txt
+    echo "Card ID '$CARDID' was used at '$NOW'." > $SETTINGS_PATH/latestID.txt
     echo "$CARDID" > $SETTINGS_PATH/Latest_RFID
     if [ "${DEBUG_rfid_trigger_play_sh}" == "TRUE" ]; then echo "Card ID '$CARDID' was used" >> $PATHDATA/../logs/debug.log; fi
 
@@ -277,24 +277,24 @@ if [ "$CARDID" ]; then
 
             # Look for human readable shortcut in folder 'shortcuts'
             # check if CARDID has a text file by the same name - which would contain the human readable folder name
-            if [ -f $PATHDATA/../shared/shortcuts/$CARDID ]
+            if [ -f $SHORTCUTS_PATH/$CARDID ]
             then
                 # Read human readable shortcut from file
-                FOLDER=`cat $PATHDATA/../shared/shortcuts/$CARDID`
+                FOLDER=`cat $SHORTCUTS_PATH/$CARDID`
                 # Add info into the log, making it easer to monitor cards
-                echo "This ID has been used before." >> $PATHDATA/../shared/latestID.txt
+                echo "This ID has been used before." >> $SETTINGS_PATH/latestID.txt
                 if [ "${DEBUG_rfid_trigger_play_sh}" == "TRUE" ]; then echo "This ID has been used before."   >> $PATHDATA/../logs/debug.log; fi
             else
                 # Human readable shortcut does not exists, so create one with the content $CARDID
                 # this file can later be edited manually over the samba network
-                echo "$CARDID" > $PATHDATA/../shared/shortcuts/$CARDID
+                echo "$CARDID" > $SHORTCUTS_PATH/$CARDID
                 FOLDER=$CARDID
                 # Add info into the log, making it easer to monitor cards
-                echo "This ID was used for the first time." >> $PATHDATA/../shared/latestID.txt
+                echo "This ID was used for the first time." >> $SETTINGS_PATH/latestID.txt
                 if [ "${DEBUG_rfid_trigger_play_sh}" == "TRUE" ]; then echo "This ID was used for the first time."   >> $PATHDATA/../logs/debug.log; fi
             fi
             # Add info into the log, making it easer to monitor cards
-            echo "The shortcut points to audiofolder '$FOLDER'." >> $PATHDATA/../shared/latestID.txt
+            echo "The shortcut points to audiofolder '$FOLDER'." >> $SETTINGS_PATH/latestID.txt
             if [ "${DEBUG_rfid_trigger_play_sh}" == "TRUE" ]; then echo "The shortcut points to audiofolder '$FOLDER'." >> $PATHDATA/../logs/debug.log; fi
             ;;
     esac

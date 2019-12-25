@@ -85,7 +85,7 @@ if($post['delete'] == "delete") {
         /*
         * do what's asked of us
         */
-        $fileshortcuts = $conf['shared_abs']."/shortcuts/".$post['cardID'];
+        $fileshortcuts = $conf['shortcuts_path']."/".$post['cardID'];
         if(isset($post['streamURL'])) {
             /*
             * Stream URL to be created

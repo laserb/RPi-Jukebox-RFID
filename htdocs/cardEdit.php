@@ -28,7 +28,7 @@ html_bootstrap3_createHeader("en","Phoniebox",$conf['base_url']);
 <?php
 include("inc.navigation.php");
 
-$fileshortcuts = $conf['shared_abs']."/shortcuts/".$post['cardID'];
+$fileshortcuts = $conf['shortcuts_path']."/".$post['cardID'];
 
 /*******************************************
 * ACTIONS
