@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import subprocess
 import os
@@ -9,7 +9,7 @@ reader = Reader()
 # get absolute path of this script
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
-print dir_path
+print(dir_path)
 
 while True:
         # reading the card id
@@ -21,9 +21,10 @@ while True:
         # See here for (German ;) details:
         # https://github.com/MiczFlor/RPi-Jukebox-RFID/issues/551
         cardid = reader.reader.readCard()
+        print(cardid)
         try:
             # start the player script and pass on the cardid
-            if cardid != None:
-                subprocess.call([dir_path + '/rfid_trigger_play.sh --cardid=' + cardid], shell=True)
-        except OSError as e:
-            print "Execution failed:"
+            if cardid is not None:
+                subprocess.Popen([dir_path + '/rfid_trigger_play.sh --cardid=' + cardid], shell=True)
+        except Exception as e:
+            print("Execution failed:" + e)
